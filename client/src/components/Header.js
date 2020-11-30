@@ -23,7 +23,7 @@ const Header = () => {
 
   const auth = useSelector(state => state.auth);
 
-  const { user } = auth;
+  const { email } = auth;
 
   const onClickHandler = event => {
     setCurrent(event.key);
@@ -33,7 +33,7 @@ const Header = () => {
     firebase.auth().signOut();
     dispatch({
       type: USER_LOGGED_OUT,
-      payload: null,
+      payload: {},
     });
 
     history.push("/login");
@@ -45,11 +45,11 @@ const Header = () => {
         <Link to="/">Home</Link>
       </Item>
 
-      {user && (
+      {email && (
         <SubMenu
           key="SubMenu"
           icon={<SettingOutlined />}
-          title={user.email && user.email.split("@")[0]}
+          title={email && email.split("@")[0]}
           className="float-right"
         >
           <Item key="setting:1">Option 1</Item>
@@ -64,7 +64,7 @@ const Header = () => {
         </SubMenu>
       )}
 
-      {!user && (
+      {!email && (
         <React.Fragment>
           <Item key="login" icon={<UserOutlined />} className="float-right">
             <Link to="/login">Login</Link>
