@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 import { auth } from "../../firebase";
 
@@ -64,6 +65,10 @@ const Register = () => {
             <button type="submit" className="btn btn-raised mt-3">
               Register
             </button>
+
+            <Link to="/login" className="btn btn-raised btn-link mt-3">
+              Have an account? Click Here
+            </Link>
           </form>
         </div>
       </div>

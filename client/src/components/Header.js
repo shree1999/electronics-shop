@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { USER_LOGGED_OUT } from "../constants";
 
@@ -20,6 +20,10 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const auth = useSelector(state => state.auth);
+
+  const { user } = auth;
 
   const onClickHandler = event => {
     setCurrent(event.key);
@@ -41,25 +45,39 @@ const Header = () => {
         <Link to="/">Home</Link>
       </Item>
 
-      <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
-        <Item key="setting:1">Option 1</Item>
-        <Item key="setting:2">Option 2</Item>
-        <Item
-          key="setting:3"
-          icon={<LogoutOutlined />}
-          onClick={logoutUserHandler}
+      {user && (
+        <SubMenu
+          key="SubMenu"
+          icon={<SettingOutlined />}
+          title={user.email && user.email.split("@")[0]}
+          className="float-right"
         >
-          Logout
-        </Item>
-      </SubMenu>
+          <Item key="setting:1">Option 1</Item>
+          <Item key="setting:2">Option 2</Item>
+          <Item
+            key="setting:3"
+            icon={<LogoutOutlined />}
+            onClick={logoutUserHandler}
+          >
+            Logout
+          </Item>
+        </SubMenu>
+      )}
 
-      <Item key="login" icon={<UserOutlined />} className="float-right">
-        <Link to="/login">Login</Link>
-      </Item>
-
-      <Item key="register" icon={<UserAddOutlined />} className="float-right">
-        <Link to="/register">Register</Link>
-      </Item>
+      {!user && (
+        <React.Fragment>
+          <Item key="login" icon={<UserOutlined />} className="float-right">
+            <Link to="/login">Login</Link>
+          </Item>
+          <Item
+            key="register"
+            icon={<UserAddOutlined />}
+            className="float-right"
+          >
+            <Link to="/register">Register</Link>
+          </Item>
+        </React.Fragment>
+      )}
     </Menu>
   );
 };
