@@ -66,7 +66,6 @@ const Register = () => {
             </button>
           </form>
         </div>
-        <ToastContainer />
       </div>
     </div>
   );
