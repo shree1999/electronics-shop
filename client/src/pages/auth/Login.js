@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
-import { GoogleOutlined, UserOutlined } from "@ant-design/icons";
+import { GoogleOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 import { auth, googleAuthProvider } from "../../firebase";
 import { USER_LOGGED_IN } from "../../constants";
@@ -13,6 +14,13 @@ const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+  const authUser = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (authUser && authUser.email) {
+      history.push("/");
+    }
+  }, [authUser, history]);
 
   const onSubmitHandler = async event => {
     event.preventDefault();
@@ -23,6 +31,7 @@ const Login = ({ history }) => {
 
       const { user } = result;
       const userTokenId = await user.getIdTokenResult();
+      setLoading(false);
 
       dispatch({
         type: USER_LOGGED_IN,
@@ -32,11 +41,8 @@ const Login = ({ history }) => {
         },
       });
 
-      setLoading(false);
-
       history.push("/");
     } catch (err) {
-      console.log(err.message);
       toast.error(err.message);
       setLoading(false);
     }
@@ -111,6 +117,10 @@ const Login = ({ history }) => {
               Login with google
             </Button>
           </form>
+
+          <Link to="/forgot/password" className="float-right text-danger">
+            Forgot Password?
+          </Link>
         </div>
       </div>
     </div>

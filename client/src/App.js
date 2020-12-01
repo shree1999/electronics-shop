@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
@@ -20,8 +21,6 @@ const App = () => {
     const unsubscribe = auth.onAuthStateChanged(async user => {
       if (user) {
         const userTokenId = await user.getIdTokenResult();
-
-        console.log(user);
 
         dispatch({
           type: USER_LOGGED_IN,
@@ -46,6 +45,7 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} exact />
         <Route path="/register/complete" component={RegisterComplete} />
+        <Route path="/forgot/password" component={ForgotPassword} />
       </Switch>
     </React.Fragment>
   );
