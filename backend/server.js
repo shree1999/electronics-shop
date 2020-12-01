@@ -7,6 +7,7 @@ import helmet from "helmet";
 import logger from "morgan";
 
 import { connectDatabase } from "./config/db.js";
+import authRoutes from "./routes/auth.routes.js";
 
 dotenv.config();
 await connectDatabase(mongoose); // database connection
@@ -20,6 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(helmet());
 app.use(logger("dev"));
+
+// routes
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server up and running on port ${PORT}`);
