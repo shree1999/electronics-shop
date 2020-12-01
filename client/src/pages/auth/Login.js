@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 
 import { auth, googleAuthProvider } from "../../firebase";
 import { USER_LOGGED_IN } from "../../constants";
+import { createOrUpdateUser } from "../../actions/userAction";
 
 const Login = ({ history }) => {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("123456789");
+  const [email, setEmail] = useState("gupta.shreeansh54@gmail.com");
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -31,17 +32,18 @@ const Login = ({ history }) => {
 
       const { user } = result;
       const userTokenId = await user.getIdTokenResult();
-      setLoading(false);
 
-      dispatch({
-        type: USER_LOGGED_IN,
-        payload: {
-          email: user.email,
-          token: userTokenId.token,
-        },
-      });
+      const res = await createOrUpdateUser(userTokenId.token);
+      console.log(res);
+      // dispatch({
+      //   type: USER_LOGGED_IN,
+      //   payload: {
+      //     email: user.email,
+      //     token: userTokenId.token,
+      //   },
+      // });
 
-      history.push("/");
+      // history.push("/"); // we are moving to different component hence setting loading here will result to memory leak.
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
