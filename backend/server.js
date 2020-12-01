@@ -1,16 +1,16 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import bodyParser from "body-parser";
-import cors from "cors";
-import helmet from "helmet";
-import logger from "morgan";
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const helmet = require("helmet");
+const logger = require("morgan");
 
-import { connectDatabase } from "./config/db.js";
-import authRoutes from "./routes/auth.routes.js";
+const { connectDatabase } = require("./config/db.js");
+const authRoutes = require("./routes/auth.routes.js");
 
 dotenv.config();
-await connectDatabase(mongoose); // database connection
+connectDatabase(mongoose); // database connection
 
 const app = express();
 const PORT = process.env.PORT || 8000;

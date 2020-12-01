@@ -14,4 +14,6 @@ const connectDatabase = async mongoose => {
   }
 };
 
-export { connectDatabase };
+module.exports = {
+  connectDatabase,
+};
