@@ -6,7 +6,6 @@ import { GoogleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 import { auth, googleAuthProvider } from "../../firebase";
-import { USER_LOGGED_IN } from "../../constants";
 import { createOrUpdateUser } from "../../actions/userAction";
 
 const Login = ({ history }) => {
@@ -33,17 +32,7 @@ const Login = ({ history }) => {
       const { user } = result;
       const userTokenId = await user.getIdTokenResult();
 
-      const res = await createOrUpdateUser(userTokenId.token);
-      console.log(res);
-      // dispatch({
-      //   type: USER_LOGGED_IN,
-      //   payload: {
-      //     email: user.email,
-      //     token: userTokenId.token,
-      //   },
-      // });
-
-      // history.push("/"); // we are moving to different component hence setting loading here will result to memory leak.
+      dispatch(createOrUpdateUser(userTokenId.token));
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
@@ -58,14 +47,7 @@ const Login = ({ history }) => {
 
       const { user } = result;
       const userTokenId = await user.getIdTokenResult();
-      dispatch({
-        type: USER_LOGGED_IN,
-        payload: {
-          email: user.email,
-          token: userTokenId.token,
-        },
-      });
-
+      dispatch(createOrUpdateUser(userTokenId.token));
       history.push("/");
     } catch (err) {
       toast.error(err.message);
@@ -75,11 +57,11 @@ const Login = ({ history }) => {
   return (
     <div className="container p-5">
       <div className="row">
-        <div className="col-md-6 offset-md-3">
+        <div className="col-md-6 offset-3">
           {loading ? (
             <h4 className="display-5 text-danger">Loading...</h4>
           ) : (
-            <h3 className="display-3">Login</h3>
+            <h3 className="display-3 mb-0">Login</h3>
           )}
           <p className="lead">Welcome Back!</p>
           <form onSubmit={onSubmitHandler}>

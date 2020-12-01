@@ -11,7 +11,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import { auth } from "./firebase";
-import { USER_LOGGED_IN } from "./constants";
+import { getCurrentUser } from "./actions/userAction";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -22,13 +22,7 @@ const App = () => {
       if (user) {
         const userTokenId = await user.getIdTokenResult();
 
-        dispatch({
-          type: USER_LOGGED_IN,
-          payload: {
-            email: user.email,
-            token: userTokenId.token,
-          },
-        });
+        dispatch(getCurrentUser(userTokenId.token));
       }
     });
 
