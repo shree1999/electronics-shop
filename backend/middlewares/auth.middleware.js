@@ -6,8 +6,6 @@ const authCheck = async (req, res, next) => {
       .auth()
       .verifyIdToken(req.headers.authtoken);
 
-    console.log(firebaseUser);
-
     req.user = firebaseUser;
 
     next();

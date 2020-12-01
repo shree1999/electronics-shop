@@ -18,7 +18,12 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (authUser && authUser.email) {
-      history.push("/");
+      // redirecting user based on role
+      if (authUser.role === "admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/user/history");
+      }
     }
   }, [authUser, history]);
 
@@ -48,7 +53,6 @@ const Login = ({ history }) => {
       const { user } = result;
       const userTokenId = await user.getIdTokenResult();
       dispatch(createOrUpdateUser(userTokenId.token));
-      history.push("/");
     } catch (err) {
       toast.error(err.message);
     }
