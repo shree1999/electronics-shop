@@ -7,11 +7,7 @@ import Loading from "../LoadingToRedirect";
 const PrivateUserRoute = ({ children, ...rest }) => {
   const authUser = useSelector(state => state.auth);
 
-  return authUser && authUser.token ? (
-    <Route {...rest} render={() => children} />
-  ) : (
-    <Loading />
-  );
+  return authUser && authUser.token ? <Route {...rest} /> : <Loading />;
 };
 
 export default PrivateUserRoute;

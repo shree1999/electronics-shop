@@ -15,8 +15,11 @@ import History from "./pages/users/History";
 import Wishlist from "./pages/users/Wishlist";
 import Password from "./pages/users/Password";
 
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
 import Header from "./components/Header";
 import PrivateUserRoute from "./components/routes/PrivateUserRoutes";
+import PrivateAdminRoute from "./components/routes/PrivateAdminRoute";
 
 import { auth } from "./firebase";
 import { getCurrentUser } from "./actions/userAction";
@@ -51,6 +54,7 @@ const App = () => {
         <PrivateUserRoute path="/user/history" component={History} />
         <PrivateUserRoute path="/user/password" component={Password} />
         <PrivateUserRoute path="/user/wishlist" component={Wishlist} />
+        <PrivateAdminRoute path="/admin/dashboard" component={AdminDashboard} />
       </Switch>
     </React.Fragment>
   );

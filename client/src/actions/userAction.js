@@ -53,3 +53,15 @@ export const getCurrentUser = token => async dispatch => {
     console.error(err.message);
   }
 };
+
+export const getAdminUser = async token => {
+  return await axios.post(
+    "/api/auth/me/admin",
+    {},
+    {
+      headers: {
+        authToken: token,
+      },
+    }
+  );
+};
