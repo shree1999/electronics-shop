@@ -40,47 +40,45 @@ const Header = () => {
   };
 
   return (
-    <div className="container">
-      <Menu onClick={onClickHandler} selectedKeys={[current]} mode="horizontal">
-        <Item key="home" icon={<HomeOutlined />}>
-          <Link to="/">Home</Link>
-        </Item>
+    <Menu onClick={onClickHandler} selectedKeys={[current]} mode="horizontal">
+      <Item key="home" icon={<HomeOutlined />}>
+        <Link to="/">Home</Link>
+      </Item>
 
-        {email && (
-          <SubMenu
-            key="SubMenu"
-            icon={<SettingOutlined />}
-            title={email && email.split("@")[0]}
+      {email && (
+        <SubMenu
+          key="SubMenu"
+          icon={<SettingOutlined />}
+          title={email && email.split("@")[0]}
+          className="float-right"
+        >
+          <Item key="setting:1">Option 1</Item>
+          <Item key="setting:2">Option 2</Item>
+          <Item
+            key="setting:3"
+            icon={<LogoutOutlined />}
+            onClick={logoutUserHandler}
+          >
+            Logout
+          </Item>
+        </SubMenu>
+      )}
+
+      {!email && (
+        <React.Fragment>
+          <Item key="login" icon={<UserOutlined />} className="float-right">
+            <Link to="/login">Login</Link>
+          </Item>
+          <Item
+            key="register"
+            icon={<UserAddOutlined />}
             className="float-right"
           >
-            <Item key="setting:1">Option 1</Item>
-            <Item key="setting:2">Option 2</Item>
-            <Item
-              key="setting:3"
-              icon={<LogoutOutlined />}
-              onClick={logoutUserHandler}
-            >
-              Logout
-            </Item>
-          </SubMenu>
-        )}
-
-        {!email && (
-          <React.Fragment>
-            <Item key="login" icon={<UserOutlined />} className="float-right">
-              <Link to="/login">Login</Link>
-            </Item>
-            <Item
-              key="register"
-              icon={<UserAddOutlined />}
-              className="float-right"
-            >
-              <Link to="/register">Register</Link>
-            </Item>
-          </React.Fragment>
-        )}
-      </Menu>
-    </div>
+            <Link to="/register">Register</Link>
+          </Item>
+        </React.Fragment>
+      )}
+    </Menu>
   );
 };
 
