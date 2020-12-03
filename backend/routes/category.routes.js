@@ -14,11 +14,11 @@ const router = express.Router();
 router
   .route("/")
   .post(authCheck, adminCheck, createCategory)
-  .get(authCheck, adminCheck, getAllCategories);
+  .get(getAllCategories);
 
 router
   .route("/:slug")
-  .get(authCheck, adminCheck, readCategory)
+  .get(readCategory)
   .put(authCheck, adminCheck, updateCategory)
   .delete(authCheck, adminCheck, removeCategory);
 
