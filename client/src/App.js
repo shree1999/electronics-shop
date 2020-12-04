@@ -16,6 +16,7 @@ import Wishlist from "./pages/users/Wishlist";
 import Password from "./pages/users/Password";
 
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import CreateCategory from "./pages/admin/Category/CreateCategory";
 
 import Header from "./components/Header";
 import PrivateUserRoute from "./components/routes/PrivateUserRoutes";
@@ -55,6 +56,7 @@ const App = () => {
         <PrivateUserRoute path="/user/password" component={Password} />
         <PrivateUserRoute path="/user/wishlist" component={Wishlist} />
         <PrivateAdminRoute path="/admin/dashboard" component={AdminDashboard} />
+        <PrivateAdminRoute path="/admin/category" component={CreateCategory} />
       </Switch>
     </React.Fragment>
   );

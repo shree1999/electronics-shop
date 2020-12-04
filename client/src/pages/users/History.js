@@ -1,6 +1,6 @@
 import React from "react";
 
-import UserNav from "../../components/user-navs/UserNav";
+import UserNav from "../../components/navs/UserNav";
 
 const History = () => {
   return (

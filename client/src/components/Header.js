@@ -6,6 +6,7 @@ import {
   UserAddOutlined,
   UserOutlined,
   LogoutOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
@@ -23,7 +24,7 @@ const Header = () => {
 
   const auth = useSelector(state => state.auth);
 
-  const { email } = auth;
+  const { email, role } = auth;
 
   const onClickHandler = event => {
     setCurrent(event.key);
@@ -52,8 +53,20 @@ const Header = () => {
           title={email && email.split("@")[0]}
           className="float-right"
         >
-          <Item key="setting:1">Option 1</Item>
-          <Item key="setting:2">Option 2</Item>
+          {email && role === "admin" ? (
+            <React.Fragment>
+              <Item key="setting:1" icon={<EditOutlined />}>
+                <Link to="/admin/dashboard">Dashboard</Link>
+              </Item>
+              <Item key="setting:2">
+                <Link to="/user/history">History Dashboard</Link>
+              </Item>
+            </React.Fragment>
+          ) : (
+            <Item key="setting:2">
+              <Link to="/user/history">History Dashboard</Link>
+            </Item>
+          )}
           <Item
             key="setting:3"
             icon={<LogoutOutlined />}

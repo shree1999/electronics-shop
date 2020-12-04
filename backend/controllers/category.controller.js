@@ -20,7 +20,7 @@ const createCategory = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     if (err.code === 11000) {
-      return res.status(400).send("This category already exists");
+      return res.status(400).send({ error: "This category already exists" });
     }
 
     res.status(400).send({ error: "Create category failed" });
@@ -28,7 +28,7 @@ const createCategory = async (req, res) => {
 };
 
 /*
-  @route -> GET /api/categories
+  @route -> GET /api/category
   @desc  -> get all categories
 */
 const getAllCategories = async (req, res) => {
@@ -36,11 +36,11 @@ const getAllCategories = async (req, res) => {
     const categories = await Category.find().sort({ createdAt: -1 }).exec();
 
     if (!categories) {
-      return res.status(204).send({ msg: "No categories created" });
+      return res.status(400).send({ msg: "No categories created" });
     }
     res.send(categories);
   } catch (err) {
-    console.error(err.message);
+    res.status(400).send({ error: "Something went wrong" });
   }
 };
 
