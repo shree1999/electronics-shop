@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import AdminNav from "../../../components/navs/AdminNav";
 import {
@@ -10,6 +8,7 @@ import {
   getCategories,
   removeCategory,
 } from "../../../actions/category.action";
+import CategoryList from "./CategoryList";
 
 const CreateCategory = () => {
   const [name, setName] = useState("");
@@ -49,9 +48,7 @@ const CreateCategory = () => {
   const onDeleteHandler = async slug => {
     try {
       if (window.confirm("Are you sure?")) {
-        setLoading(true);
         const res = await removeCategory(slug, authUser.token);
-        setLoading(false);
         toast.success(`${res.data.name} deleted successfully`);
         fetchData();
       } else {
@@ -102,31 +99,7 @@ const CreateCategory = () => {
         </div>
 
         <div className="col-md-5">
-          <div className="card mt-2">
-            <h3 className="text-center pt-3">
-              Total existing categories {categories.length}
-            </h3>
-            <hr />
-            <div className="card-body">
-              {categories.map(c => (
-                <div key={`${c._id}`} className="alert alert-secondary">
-                  {c.name}
-                  <span
-                    className="btn btn-sm text-danger float-right"
-                    onClick={() => onDeleteHandler(c.slug)}
-                  >
-                    <DeleteOutlined />
-                  </span>
-                  <Link
-                    to={`/admin/category/edit/${c.slug}`}
-                    className="btn btn-sm text-warning float-right"
-                  >
-                    <EditOutlined />
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
+          <CategoryList categories={categories} deleteItem={onDeleteHandler} />
         </div>
       </div>
     </div>

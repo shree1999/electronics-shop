@@ -13,10 +13,9 @@ const getCategory = async slug => {
   try {
     const res = await axios.get(`/api/category/${slug}`);
 
-    console.log(res);
     return res;
   } catch (err) {
-    console.log(err);
+    throw new Error(err.response.data.error);
   }
 };
 
@@ -64,7 +63,7 @@ const updateCategory = async (slug, token, newName) => {
     );
     return res;
   } catch (err) {
-    throw new Error(err.message);
+    throw new Error(err.response.data.error);
   }
 };
 
