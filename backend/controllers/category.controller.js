@@ -36,7 +36,7 @@ const getAllCategories = async (req, res) => {
     const categories = await Category.find().sort({ createdAt: -1 }).exec();
 
     if (!categories) {
-      return res.status(400).send({ msg: "No categories created" });
+      return res.status(400).send({ error: "No categories created" });
     }
     res.send(categories);
   } catch (err) {

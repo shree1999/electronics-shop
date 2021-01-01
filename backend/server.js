@@ -9,6 +9,7 @@ const logger = require("morgan");
 const { connectDatabase } = require("./config/db.js");
 const authRoutes = require("./routes/auth.routes.js");
 const categoryRoutes = require("./routes/category.routes");
+const subRoutes = require("./routes/sub.routes");
 
 dotenv.config();
 connectDatabase(mongoose); // database connection
@@ -26,6 +27,7 @@ app.use(logger("dev"));
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/subs", subRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server up and running on port ${PORT}`);
