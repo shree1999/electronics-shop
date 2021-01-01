@@ -57,7 +57,9 @@ const RegisterComplete = ({ history }) => {
               className="form-control"
               value={email}
               autoFocus
-              disabled
+              disabled={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter Email"
             />
 
             <input
