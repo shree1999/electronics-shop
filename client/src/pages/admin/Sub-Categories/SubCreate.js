@@ -8,6 +8,7 @@ import SubList from "./SubList";
 import {
   createSubCategory,
   getAllSubCategories,
+  deleteSubCategory,
 } from "../../../actions/sub.action";
 
 const SubCreate = () => {
@@ -53,6 +54,20 @@ const SubCreate = () => {
       fetchSubCategories();
     } catch (err) {
       setLoading(false);
+      toast.error(err.message);
+    }
+  };
+
+  const onDeleteHandler = async slug => {
+    try {
+      if (window.confirm("Are you sure?")) {
+        const data = await deleteSubCategory(slug, auth.token);
+        toast.success(`${data.name} deleted successfully`);
+        fetchSubCategories();
+      } else {
+        toast.warning("Delete cancelled");
+      }
+    } catch (err) {
       toast.error(err.message);
     }
   };
@@ -103,7 +118,7 @@ const SubCreate = () => {
           </form>
         </div>
         <div className="col-md-5">
-          <SubList subs={subCategories} />
+          <SubList subs={subCategories} delete={onDeleteHandler} />
         </div>
       </div>
     </div>

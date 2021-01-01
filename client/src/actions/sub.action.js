@@ -22,3 +22,15 @@ export const getAllSubCategories = async () => {
     throw new Error(err.response.data.error);
   }
 };
+
+export const deleteSubCategory = async (slug, token) => {
+  try {
+    const res = await axios.delete(`/api/subs/${slug}`, {
+      headers: { authToken: token },
+    });
+
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.error);
+  }
+};

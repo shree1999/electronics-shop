@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const SubList = props => {
   const [search, setSearch] = useState("");
@@ -23,6 +24,12 @@ const SubList = props => {
         {filteredSubs.map(s => (
           <div key={`${s._id}`} className="alert alert-secondary">
             {s.name}
+            <span
+              className="btn btn-sm text-danger float-right"
+              onClick={() => props.delete(s.slug)}
+            >
+              <DeleteOutlined />
+            </span>
           </div>
         ))}
       </div>

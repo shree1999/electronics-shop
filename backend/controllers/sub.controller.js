@@ -80,3 +80,21 @@ exports.createSubCategory = async (req, res) => {
     res.status(400).send({ error: err.message });
   }
 };
+
+/*
+  @route  DELETE /api/subs/:slug
+  @access admin
+  @desc   allow admin to delete this sub category
+*/
+exports.deleteSubCategory = async (req, res) => {
+  try {
+    const sub = await Sub.findOne({ slug: req.params.slug });
+    if (!sub) {
+      return res.status(400).send({ error: "Sub Category not found" });
+    }
+    sub.remove();
+    res.send(sub);
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+};
