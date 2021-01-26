@@ -31,6 +31,7 @@ const UpdateSubCategory = ({ match, history }) => {
     try {
       const data = await getSingleCategory(match.params.slug);
       setName(data.name);
+      setParentId(data.parent);
     } catch (err) {
       console.error(err.message);
     }
@@ -79,6 +80,7 @@ const UpdateSubCategory = ({ match, history }) => {
           )}
           <form className="p-5" onSubmit={onSubmitHandler}>
             <div className="form-group">
+              <label htmlFor="">Select Parent Category</label>
               <select
                 className="form-control"
                 onChange={e => setParentId(e.target.value)}
@@ -86,13 +88,18 @@ const UpdateSubCategory = ({ match, history }) => {
                 <option key="1">Select Category</option>
                 {categories.length > 0 &&
                   categories.map(c => (
-                    <option key={c._id.toString()} value={c._id}>
+                    <option
+                      key={c._id.toString()}
+                      value={c._id}
+                      selected={c._id === parentId}
+                    >
                       {c.name}
                     </option>
                   ))}
               </select>
             </div>
             <div className="form-group">
+              <label htmlFor="">Change name if required</label>
               <input
                 type="text"
                 value={name}
