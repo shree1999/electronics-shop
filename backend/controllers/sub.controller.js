@@ -1,6 +1,6 @@
-const slugify = require("slugify");
+const slugify = require('slugify');
 
-const Sub = require("../models/subcategory.model");
+const Sub = require('../models/subcategory.model');
 
 /*
   @route   GET /api/subs 
@@ -11,12 +11,12 @@ exports.getAllSubCategories = async (req, res) => {
   try {
     const subs = await Sub.find().sort({ createdAt: -1 });
     if (!subs) {
-      return res.status(400).send({ error: "No sub-categories found" });
+      return res.status(400).send({ error: 'No sub-categories found' });
     }
     return res.status(200).send(subs);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ error: "Server Error" });
+    res.status(500).send({ error: 'Server Error' });
   }
 };
 
@@ -29,12 +29,12 @@ exports.getSingleSubCategory = async (req, res) => {
   try {
     const sub = await Sub.findOne({ slug: req.params.slug });
     if (!sub) {
-      return res.status(400).send({ error: "Sub Category not found" });
+      return res.status(400).send({ error: 'Sub Category not found' });
     }
     res.send(sub);
   } catch (err) {
     console.error(err.message);
-    res.status({ error: "Server Error" });
+    res.status({ error: 'Server Error' });
   }
 };
 
@@ -49,12 +49,12 @@ exports.getAllSubs = async (req, res) => {
       createdAt: -1,
     });
     if (!subs) {
-      return res.status(400).send({ error: "No sub-categories found" });
+      return res.status(400).send({ error: 'No sub-categories found' });
     }
     return res.status(200).send(subs);
   } catch (err) {
     console.error(err.message);
-    res.status({ error: "Server Error" });
+    res.status({ error: 'Server Error' });
   }
 };
 
@@ -75,7 +75,7 @@ exports.createSubCategory = async (req, res) => {
     if (err.code === 11000) {
       return res
         .status(400)
-        .send({ error: "This Subcategory already exisits" });
+        .send({ error: 'This Subcategory already exisits' });
     }
     res.status(400).send({ error: err.message });
   }
@@ -90,11 +90,39 @@ exports.deleteSubCategory = async (req, res) => {
   try {
     const sub = await Sub.findOne({ slug: req.params.slug });
     if (!sub) {
-      return res.status(400).send({ error: "Sub Category not found" });
+      return res.status(400).send({ error: 'Sub Category not found' });
     }
     sub.remove();
     res.send(sub);
   } catch (err) {
     res.status(500).send({ error: err.message });
+  }
+};
+
+/*
+  @route  PUT /api/subs/:slug
+  @access admin
+  @desc   allow admin to update this sub category
+*/
+exports.updateSubCategory = async (req, res) => {
+  try {
+    console.log(req.body);
+    const sub = await Sub.findOneAndUpdate(
+      { slug: req.params.slug },
+      {
+        name: req.body.name,
+        parent: req.body.parent,
+        slug: slugify(req.body.name, { lower: true }),
+      },
+      { new: true }
+    );
+
+    if (!sub) {
+      return res.status(400).send({ error: 'Sub Category not found' });
+    }
+    res.send(sub);
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).send({ error: 'Something went wrong' });
   }
 };

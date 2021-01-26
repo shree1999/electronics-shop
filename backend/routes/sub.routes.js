@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 
 const {
   getAllSubCategories,
@@ -6,21 +6,23 @@ const {
   getAllSubs,
   createSubCategory,
   deleteSubCategory,
-} = require("../controllers/sub.controller");
-const { authCheck, adminCheck } = require("../middlewares/auth.middleware");
+  updateSubCategory,
+} = require('../controllers/sub.controller');
+const { authCheck, adminCheck } = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
-router.route("/").get(getAllSubCategories);
+router.route('/').get(getAllSubCategories);
 
 router
-  .route("/:slug")
+  .route('/:slug')
   .get(getSingleSubCategory)
-  .delete(authCheck, adminCheck, deleteSubCategory);
+  .delete(authCheck, adminCheck, deleteSubCategory)
+  .put(authCheck, adminCheck, updateSubCategory);
 
 // this id represents categories id.
 router
-  .route("/:id")
+  .route('/:id')
   .get(getAllSubs)
   .post(authCheck, adminCheck, createSubCategory);
 

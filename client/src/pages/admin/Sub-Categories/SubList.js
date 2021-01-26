@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { DeleteOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const SubList = props => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const filteredSubs = props.subs.filter(s =>
     s.name.toLowerCase().includes(search.toLowerCase())
@@ -30,6 +31,12 @@ const SubList = props => {
             >
               <DeleteOutlined />
             </span>
+            <Link
+              to={`/admin/sub/edit/${s.slug}`}
+              className="btn btn-sm text-warning float-right"
+            >
+              <EditOutlined />
+            </Link>
           </div>
         ))}
       </div>

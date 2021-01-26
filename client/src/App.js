@@ -1,31 +1,32 @@
-import React, { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import { useDispatch } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import RegisterComplete from "./pages/auth/RegisterComplete";
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import RegisterComplete from './pages/auth/RegisterComplete';
 
-import Home from "./pages/Home";
+import Home from './pages/Home';
 
-import History from "./pages/users/History";
-import Wishlist from "./pages/users/Wishlist";
-import Password from "./pages/users/Password";
+import History from './pages/users/History';
+import Wishlist from './pages/users/Wishlist';
+import Password from './pages/users/Password';
 
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import CreateCategory from "./pages/admin/Category/CreateCategory";
-import UpdateCategory from "./pages/admin/Category/UpdateCategory";
-import SubCreate from "./pages/admin/Sub-Categories/SubCreate";
+import AdminDashboard from './pages/admin/AdminDashboard';
+import CreateCategory from './pages/admin/Category/CreateCategory';
+import UpdateCategory from './pages/admin/Category/UpdateCategory';
+import SubCreate from './pages/admin/Sub-Categories/SubCreate';
+import SubUpdate from './pages/admin/Sub-Categories/SubUpdate';
 
-import Header from "./components/Header";
-import PrivateUserRoute from "./components/routes/PrivateUserRoutes";
-import PrivateAdminRoute from "./components/routes/PrivateAdminRoute";
+import Header from './components/Header';
+import PrivateUserRoute from './components/routes/PrivateUserRoutes';
+import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 
-import { auth } from "./firebase";
-import { getCurrentUser } from "./actions/userAction";
+import { auth } from './firebase';
+import { getCurrentUser } from './actions/userAction';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,8 @@ const App = () => {
           path="/admin/category/edit/:slug"
           component={UpdateCategory}
         />
-        <PrivateAdminRoute path="/admin/sub" component={SubCreate} />
+        <PrivateAdminRoute path="/admin/sub" component={SubCreate} exact />
+        <PrivateAdminRoute path="/admin/sub/edit/:slug" component={SubUpdate} />
       </Switch>
     </React.Fragment>
   );
