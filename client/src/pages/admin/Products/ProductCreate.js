@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import AdminNav from '../../../components/navs/AdminNav';
 import { createProduct } from '../../../actions/product.action';
-import { ProductInput } from '../../../components/Admin/ProductInput';
+import { ProductInput } from './ProductInput';
 
 export const ProductCreate = () => {
   const [values, setValues] = useState({
@@ -37,7 +37,8 @@ export const ProductCreate = () => {
       setLoading(() => true);
       const data = await createProduct(authUser.token, values);
       setLoading(() => false);
-      toast.success('Product Created Successfully');
+      window.alert('Product created successfully');
+      window.location.reload();
     } catch (err) {
       setLoading(() => false);
       toast.error(err.message);
