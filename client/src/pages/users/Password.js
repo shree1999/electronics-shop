@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
-import UserNav from "../../components/navs/UserNav";
-import { auth } from "../../firebase";
+import UserNav from '../../components/navs/UserNav';
+import { auth } from '../../firebase';
 
 const Password = () => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const onSubmitHandler = async event => {
@@ -14,8 +14,8 @@ const Password = () => {
     try {
       const res = await auth.currentUser.updatePassword(password);
       console.log(res);
-      setPassword("");
-      toast.success("Password updated successfully");
+      setPassword('');
+      toast.success('Password updated successfully');
 
       setLoading(false);
     } catch (err) {
@@ -32,13 +32,11 @@ const Password = () => {
           <UserNav />
         </div>
         <div className="col-md-6 offset-1">
-          <h1 className="display-3">
-            {loading ? (
-              <h4 className="dispplay-5 text-danger">Loading...</h4>
-            ) : (
-              <h2 className="display-3">Update your password here.</h2>
-            )}
-          </h1>
+          {loading ? (
+            <h3 className="display-5 text-danger">Loading...</h3>
+          ) : (
+            <h1 className="display-3">Update your password here.</h1>
+          )}
           <form onSubmit={onSubmitHandler}>
             <div className="form-group">
               <input
