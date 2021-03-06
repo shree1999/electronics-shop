@@ -2,14 +2,14 @@ import axios from 'axios';
 
 export const createProduct = async (token, product) => {
   try {
-    const product = await axios.post('/api/products', product, {
+    const res = await axios.post('/api/products', product, {
       headers: {
         authToken: token,
       },
     });
 
-    return product;
+    return res.data;
   } catch (err) {
-    console.error(err.message);
+    throw new Error(err.response.data.error);
   }
 };

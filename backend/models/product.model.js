@@ -27,27 +27,27 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Price is required'],
       trim: true,
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
-    },
-    subs: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Sub',
-      },
-    ],
+    // category: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Category',
+    // },
+    // subs: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Sub',
+    //   },
+    // ],
     quantity: {
       type: Number,
       required: [true, 'Quantity is required'],
     },
-    total_sold: {
-      type: Number,
-      default: 0,
-    },
-    images: {
-      type: Array,
-    },
+    // total_sold: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // images: {
+    //   type: Array,
+    // },
     shipping: {
       type: String,
       enum: ['Yes', 'No'], // only yes and no allowed
