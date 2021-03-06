@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 const getCategories = async () => {
   try {
-    const res = await axios.get("/api/category");
+    const res = await axios.get('/api/category');
     return res;
   } catch (err) {
     throw new Error(err.response.data.error);
@@ -67,10 +67,20 @@ const updateCategory = async (slug, token, newName) => {
   }
 };
 
+const getSubsOfCategory = async id => {
+  try {
+    const res = await axios.get(`/api/category/subs/${id}`);
+    return res;
+  } catch (err) {
+    throw new Error(err.response.data.error);
+  }
+};
+
 export {
   getCategories,
   getCategory,
   removeCategory,
   updateCategory,
   createCategory,
+  getSubsOfCategory,
 };

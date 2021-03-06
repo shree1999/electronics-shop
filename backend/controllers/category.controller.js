@@ -1,6 +1,7 @@
-const slugify = require("slugify");
+const slugify = require('slugify');
 
-const Category = require("../models/category.model");
+const Category = require('../models/category.model');
+const Sub = require('../models/subcategory.model');
 
 /*
   @route -> POST /api/category, 
@@ -20,10 +21,10 @@ const createCategory = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     if (err.code === 11000) {
-      return res.status(400).send({ error: "This category already exists" });
+      return res.status(400).send({ error: 'This category already exists' });
     }
 
-    res.status(400).send({ error: "Create category failed" });
+    res.status(400).send({ error: 'Create category failed' });
   }
 };
 
@@ -36,11 +37,11 @@ const getAllCategories = async (req, res) => {
     const categories = await Category.find().sort({ createdAt: -1 }).exec();
 
     if (!categories) {
-      return res.status(400).send({ error: "No categories created" });
+      return res.status(400).send({ error: 'No categories created' });
     }
     res.send(categories);
   } catch (err) {
-    res.status(400).send({ error: "Something went wrong" });
+    res.status(400).send({ error: 'Something went wrong' });
   }
 };
 
@@ -55,13 +56,13 @@ const readCategory = async (req, res) => {
     }).exec();
 
     if (!category) {
-      return res.status(400).send({ error: "Category not found" });
+      return res.status(400).send({ error: 'Category not found' });
     }
 
     res.send(category);
   } catch (err) {
     console.error(err.message);
-    res.status(400).send({ error: "Something went wrong" });
+    res.status(400).send({ error: 'Something went wrong' });
   }
 };
 
@@ -84,12 +85,12 @@ const updateCategory = async (req, res) => {
       }
     );
     if (!category) {
-      return res.status(400).send({ error: "Category not found" });
+      return res.status(400).send({ error: 'Category not found' });
     }
     res.send(category);
   } catch (err) {
     console.error(err.message);
-    res.status(400).send({ error: "Something went wrong" });
+    res.status(400).send({ error: 'Something went wrong' });
   }
 };
 
@@ -105,7 +106,7 @@ const removeCategory = async (req, res) => {
     }).exec();
 
     if (!category) {
-      return res.status(400).send({ error: "Category not found" });
+      return res.status(400).send({ error: 'Category not found' });
     }
 
     category.remove();
@@ -113,7 +114,20 @@ const removeCategory = async (req, res) => {
     res.send(category);
   } catch (err) {
     console.error(err.message);
-    res.status(400).send({ error: "Something went wrong" });
+    res.status(400).send({ error: 'Something went wrong' });
+  }
+};
+
+const getAllSubsOfCategory = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const subs = await Sub.find({ parent: req.params.id });
+    if (subs.length === 0) {
+      return res.status(400).send({ error: 'Not Found' });
+    }
+    res.send(subs);
+  } catch (err) {
+    res.status(500).send({ error: 'Something went wrong' });
   }
 };
 
@@ -123,4 +137,5 @@ module.exports = {
   updateCategory,
   removeCategory,
   getAllCategories,
+  getAllSubsOfCategory,
 };

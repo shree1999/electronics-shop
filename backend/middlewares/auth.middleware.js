@@ -13,7 +13,7 @@ const authCheck = async (req, res, next) => {
     next();
   } catch (err) {
     res.status(401).send({
-      error: 'Invalid or expired token',
+      error: 'Invalid or expired session pls login again',
     });
   }
 };

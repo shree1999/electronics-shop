@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import AdminNav from '../../../components/navs/AdminNav';
 import { createProduct } from '../../../actions/product.action';
-import { ProductInput } from './ProductInput';
+import {
+  getCategories,
+  getSubsOfCategory,
+} from '../../../actions/category.action';
+import { ProductCreateForm } from '../../../components/Forms/ProductCreateForm';
 
 export const ProductCreate = () => {
   const [values, setValues] = useState({
@@ -21,14 +25,39 @@ export const ProductCreate = () => {
     brand: '',
   });
   const [loading, setLoading] = useState(false);
-  const colors = ['Black', 'Brown', 'Silver', 'White', 'Blue'];
-  const brand = ['Apple', 'Lenovo', 'Sony', 'Samsung'];
+  const [subOptions, setSubOptions] = useState([]);
 
   const authUser = useSelector(state => state.auth);
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    const res = await getCategories();
+    setValues(prevState => ({ ...prevState, categories: res.data }));
+  };
 
   const onChangeHandler = e => {
     e.preventDefault();
     setValues(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
+
+  const onChangeOfCategory = async e => {
+    e.preventDefault();
+    // getting all subs now
+    try {
+      const res = await getSubsOfCategory(e.target.value);
+      setValues(prevState => ({
+        ...prevState,
+        category: e.target.value,
+        subs: [],
+      }));
+      setSubOptions(prevState => res.data);
+    } catch (err) {
+      toast.error(err.message);
+      setSubOptions([]);
+    }
   };
 
   const onSubmitHandler = async e => {
@@ -44,7 +73,7 @@ export const ProductCreate = () => {
       toast.error(err.message);
     }
   };
-
+  console.log(values);
   return (
     <div className="container-fluid">
       <div className="row">
@@ -55,70 +84,14 @@ export const ProductCreate = () => {
         <div className="col-md-10">
           <h1 className="display-2 mb-3">Product Create</h1>
           <div className="col-md-6">
-            <form onSubmit={onSubmitHandler}>
-              <ProductInput
-                type="text"
-                value={values.title}
-                name="title"
-                change={onChangeHandler}
-              />
-              <ProductInput
-                type="text"
-                name="description"
-                value={values.description}
-                change={onChangeHandler}
-              />
-              <ProductInput
-                type="number"
-                name="price"
-                value={values.price}
-                change={onChangeHandler}
-              />
-              <div className="form-group">
-                <select
-                  name="shipping"
-                  id=""
-                  className="form-control"
-                  onChange={onChangeHandler}
-                >
-                  <option>Select Shipping</option>
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
-                </select>
-              </div>
-              <ProductInput
-                type="number"
-                name="quantity"
-                value={values.quantity}
-                change={onChangeHandler}
-              />
-              <div className="form-group">
-                <select
-                  name="color"
-                  id=""
-                  className="form-control"
-                  onChange={onChangeHandler}
-                >
-                  <option>Select Color</option>
-                  {colors.map(c => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <select name="brand" id="" className="form-control">
-                  <option>Select Brand</option>
-                  {brand.map(b => (
-                    <option key={b} value={b}>
-                      {b}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <button className="btn btn-outline-info">Create</button>
-            </form>
+            <ProductCreateForm
+              onSubmitForm={onSubmitHandler}
+              handleChange={onChangeHandler}
+              categoryChange={onChangeOfCategory}
+              values={values}
+              subs={subOptions}
+              setValues={setValues}
+            />
           </div>
         </div>
       </div>

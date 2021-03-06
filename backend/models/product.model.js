@@ -27,16 +27,16 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Price is required'],
       trim: true,
     },
-    // category: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Category',
-    // },
-    // subs: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Sub',
-    //   },
-    // ],
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+    },
+    subs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sub',
+      },
+    ],
     quantity: {
       type: Number,
       required: [true, 'Quantity is required'],
