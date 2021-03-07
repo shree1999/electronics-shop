@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import AdminNav from '../../../components/navs/AdminNav';
 import { createProduct } from '../../../actions/product.action';
@@ -9,6 +10,7 @@ import {
   getSubsOfCategory,
 } from '../../../actions/category.action';
 import { ProductCreateForm } from '../../../components/Forms/ProductCreateForm';
+import { FileUpload } from '../../../components/Forms/FileUpload';
 
 export const ProductCreate = () => {
   const [values, setValues] = useState({
@@ -66,14 +68,13 @@ export const ProductCreate = () => {
       setLoading(() => true);
       const data = await createProduct(authUser.token, values);
       setLoading(() => false);
-      window.alert('Product created successfully');
+      window.alert(`${data.title} Product created successfully`);
       window.location.reload();
     } catch (err) {
       setLoading(() => false);
       toast.error(err.message);
     }
   };
-  console.log(values);
   return (
     <div className="container-fluid">
       <div className="row">
@@ -82,8 +83,19 @@ export const ProductCreate = () => {
         </div>
 
         <div className="col-md-10">
-          <h1 className="display-2 mb-3">Product Create</h1>
+          <h1 className="display-2 mb-3">
+            {loading ? (
+              <LoadingOutlined className="text-primary" />
+            ) : (
+              'Create Product'
+            )}
+          </h1>
           <div className="col-md-6">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
             <ProductCreateForm
               onSubmitForm={onSubmitHandler}
               handleChange={onChangeHandler}
