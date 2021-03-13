@@ -11,9 +11,12 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
-  const products = await Product.find().lean().exec();
-  if (products.length === 0) {
-    return next({ message: 'No products found', statusCode: 200 });
-  }
+  const products = await Product.find({})
+    .limit(parseInt(req.params.limit))
+    .populate('category')
+    .populate('subs')
+    .sort({ createdAt: -1 })
+    .exec();
+
   res.send(products);
 });

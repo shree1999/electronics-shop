@@ -21,6 +21,7 @@ import UpdateCategory from './pages/admin/Category/UpdateCategory';
 import SubCreate from './pages/admin/Sub-Categories/SubCreate';
 import SubUpdate from './pages/admin/Sub-Categories/SubUpdate';
 import { ProductCreate } from './pages/admin/Products/ProductCreate';
+import { ProductList } from './pages/admin/Products/ProductList';
 
 import Header from './components/Header';
 import PrivateUserRoute from './components/routes/PrivateUserRoutes';
@@ -76,6 +77,7 @@ const App = () => {
           component={ProductCreate}
           exact
         />
+        <PrivateAdminRoute path="/admin/products" component={ProductList} />
       </Switch>
     </React.Fragment>
   );

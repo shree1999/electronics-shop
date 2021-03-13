@@ -8,9 +8,8 @@ const {
 
 const router = express.Router();
 
-router
-  .route('/')
-  .post(authCheck, adminCheck, createProduct)
-  .get(getAllProducts);
+router.route('/').post(authCheck, adminCheck, createProduct);
+
+router.route('/:limit').get(getAllProducts);
 
 module.exports = router;
