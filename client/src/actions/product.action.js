@@ -30,3 +30,17 @@ export const fetchProductsByLimit = limit => async dispatch => {
     dispatch({ type: FETCH_PRODUCTS_FAIL, payload: err.response.data.error });
   }
 };
+
+export const deleteProduct = async (slug, token) => {
+  try {
+    const res = await axios.delete(`/api/products/${slug}`, {
+      headers: {
+        authToken: token,
+      },
+    });
+
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.error);
+  }
+};

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Avatar from 'antd/lib/avatar/avatar';
 import { Badge } from 'antd';
+import { toast } from 'react-toastify';
 
 export const FileUpload = ({ values, setValues, setLoading }) => {
   const authUser = useSelector(state => state.auth);
@@ -34,7 +35,7 @@ export const FileUpload = ({ values, setValues, setLoading }) => {
               setValues(prevState => ({ ...prevState, images: uploadedFiles }));
             } catch (err) {
               setLoading(false);
-              console.error(err.message);
+              toast.error(`${err.response.data.error}`);
             }
           },
           'base64'
