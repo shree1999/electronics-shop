@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'antd';
 import { useSelector } from 'react-redux';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { deleteProduct } from '../../actions/product.action';
@@ -18,7 +18,7 @@ export const ProductCard = ({ product }) => {
       if (ans) {
         const data = await deleteProduct(slug, authUser.token);
         toast.success(`${data.title} successfully deleted`);
-        history.push('/admin/products');
+        history.push('/admin/product');
       }
     } catch (err) {
       console.error(err.message);
@@ -34,7 +34,9 @@ export const ProductCard = ({ product }) => {
         />
       }
       actions={[
-        <EditOutlined className="text-warning" />,
+        <Link to={`/admin/product/edit/${product.slug}`}>
+          <EditOutlined className="text-warning" />
+        </Link>,
         <DeleteOutlined
           className="text-danger"
           onClick={() => onClickHandler(product.slug)}

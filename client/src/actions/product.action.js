@@ -44,3 +44,25 @@ export const deleteProduct = async (slug, token) => {
     throw new Error(err.response.data.error);
   }
 };
+
+export const fetchSingleProduct = async slug => {
+  try {
+    const res = await axios.get(`/api/products/${slug}`);
+
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.error);
+  }
+};
+
+export const updateProduct = async (slug, values, token) => {
+  try {
+    const res = await axios.put(`/api/products/${slug}`, values, {
+      headers: { authToken: token },
+    });
+
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.error);
+  }
+};

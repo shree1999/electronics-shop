@@ -43,3 +43,32 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
 
   res.send({ success: true, title: product.title });
 });
+
+exports.getSingleProduct = asyncHandler(async (req, res, next) => {
+  const product = await Product.findOne({ slug: req.params.slug });
+  if (!product) {
+    return next({ message: 'Product Not Available', statusCode: 200 });
+  }
+
+  res.send(product);
+});
+
+exports.updateProduct = async (req, res) => {
+  try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
+    const updated = await Product.findOneAndUpdate(
+      { slug: req.params.slug },
+      req.body,
+      { new: true }
+    ).exec();
+    res.send(updated);
+  } catch (err) {
+    console.log('PRODUCT UPDATE ERROR ----> ', err);
+    // return res.status(400).send("Product update failed");
+    res.status(400).json({
+      error: err.message,
+    });
+  }
+};

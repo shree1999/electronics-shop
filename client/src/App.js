@@ -22,6 +22,7 @@ import SubCreate from './pages/admin/Sub-Categories/SubCreate';
 import SubUpdate from './pages/admin/Sub-Categories/SubUpdate';
 import { ProductCreate } from './pages/admin/Products/ProductCreate';
 import { ProductList } from './pages/admin/Products/ProductList';
+import { ProductUpdate } from './pages/admin/Products/ProductUpdate';
 
 import Header from './components/Header';
 import PrivateUserRoute from './components/routes/PrivateUserRoutes';
@@ -78,6 +79,10 @@ const App = () => {
           exact
         />
         <PrivateAdminRoute path="/admin/products" component={ProductList} />
+        <PrivateAdminRoute
+          path="/admin/product/edit/:slug"
+          component={ProductUpdate}
+        />
       </Switch>
     </React.Fragment>
   );
