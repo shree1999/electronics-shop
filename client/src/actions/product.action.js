@@ -66,3 +66,17 @@ export const updateProduct = async (slug, values, token) => {
     throw new Error(err.response.data.error);
   }
 };
+
+export const getProductsForHomePage = async (sort, order, limit) => {
+  try {
+    const { data } = await axios.post('/api/products/all', {
+      sort,
+      order,
+      limit,
+    });
+
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
