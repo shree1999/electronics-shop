@@ -4,7 +4,7 @@ import { Spin } from 'antd';
 
 import AdminNav from '../../../components/navs/AdminNav';
 import { fetchProductsByLimit } from '../../../actions/product.action';
-import { ProductCard } from '../../../components/Cards/ProductCard';
+import { ProductCard } from '../../../components/Cards/AdminProductCard';
 
 export const ProductList = () => {
   const dispatch = useDispatch();
