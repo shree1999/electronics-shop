@@ -111,6 +111,8 @@ const removeCategory = async (req, res) => {
 
     category.remove();
 
+    await Sub.deleteMany({ parent: category._id });
+
     res.send(category);
   } catch (err) {
     console.error(err.message);
