@@ -8,11 +8,12 @@ const {
   getSingleProduct,
   updateProduct,
   listProducts,
+  productsCount,
 } = require('../controllers/product.controller');
 
 const router = express.Router();
 
-router.route('/').post(authCheck, adminCheck, createProduct);
+router.route('/').post(authCheck, adminCheck, createProduct).get(productsCount);
 
 router.route('/:limit').get(getAllProducts);
 
