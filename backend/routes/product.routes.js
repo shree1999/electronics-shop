@@ -9,6 +9,7 @@ const {
   updateProduct,
   listProducts,
   productsCount,
+  productStarRating,
 } = require('../controllers/product.controller');
 
 const router = express.Router();
@@ -24,5 +25,7 @@ router
   .put(authCheck, adminCheck, updateProduct);
 
 router.route('/all').post(listProducts);
+
+router.put('/rating/:id', productStarRating);
 
 module.exports = router;

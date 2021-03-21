@@ -2,6 +2,7 @@ const slugify = require('slugify');
 const cloudinary = require('cloudinary').v2;
 
 const Product = require('../models/product.model');
+const User = require('../models/user.model');
 const { asyncHandler } = require('../middlewares/async');
 
 cloudinary.config({
@@ -112,10 +113,52 @@ exports.listProducts = async (req, res) => {
     res.json(products);
   } catch (err) {
     console.log(err);
+    res.status(500).send({ error: 'Something Went Wrong' });
   }
 };
 
 exports.productsCount = async (req, res) => {
   let total = await Product.find({}).estimatedDocumentCount().exec();
   res.send({ total });
+};
+
+exports.productStarRating = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).exec();
+    const user = await User.findOne({ email: req.user.email });
+    const { star } = req.body;
+
+    // who is updating?
+    // check if currently logged in user have already added rating to this product?
+    let existingRatingObject = product.ratings.find(
+      ele => ele.postedBy.toString() === user._id.toString()
+    );
+
+    // if user haven't left rating yet, push it
+    if (existingRatingObject === undefined) {
+      let ratingAdded = await Product.findByIdAndUpdate(
+        product._id,
+        {
+          $push: { ratings: { star, postedBy: user._id } },
+        },
+        { new: true }
+      ).exec();
+      console.log('ratingAdded', ratingAdded);
+      res.json(ratingAdded);
+    } else {
+      // if user have already left rating, update it
+      const ratingUpdated = await Product.updateOne(
+        {
+          ratings: { $elemMatch: existingRatingObject },
+        },
+        { $set: { 'ratings.$.star': star } },
+        { new: true }
+      ).exec();
+      console.log('ratingUpdated', ratingUpdated);
+      res.json(ratingUpdated);
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ error: 'Something Went Wrong' });
+  }
 };

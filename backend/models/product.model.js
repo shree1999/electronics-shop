@@ -59,12 +59,12 @@ const productSchema = new mongoose.Schema(
     brand: {
       type: String,
     },
-    // ratings: [
-    //   {
-    //     star: Number,
-    //     postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    //   },
-    // ],
+    ratings: [
+      {
+        star: Number,
+        postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      },
+    ],
   },
   { timestamps: true }
 );
