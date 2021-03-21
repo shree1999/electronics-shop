@@ -9,6 +9,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Laptop from '../../images/laptop.png';
 import { ProductListItems } from './ProductListItem';
 import RatingModal from '../Modals/RatingModal';
+import { showAverage } from '../AvgRating';
 
 export const SingleProduct = ({ product, star, onReviewClick }) => {
   const { title, description, images, _id } = product;
@@ -37,6 +38,9 @@ export const SingleProduct = ({ product, star, onReviewClick }) => {
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
 
+        {product && product.ratings && product.ratings.length > 0
+          ? showAverage(product)
+          : 'No rating yet'}
         <Card
           actions={[
             <>

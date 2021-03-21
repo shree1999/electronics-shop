@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { auth } from "../../firebase";
+import { auth } from '../../firebase';
 
 const Register = ({ history }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
 
   const authUser = useSelector(state => state.auth);
 
   useEffect(() => {
     if (authUser && authUser.email) {
-      history.push("/");
+      history.push('/');
     }
 
     return () => authUser;
@@ -36,7 +36,7 @@ const Register = ({ history }) => {
       toast.success(
         `Email is sent to ${email} click the link there to complete the registration`,
         {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -47,12 +47,12 @@ const Register = ({ history }) => {
       );
 
       // save user email in localStorage
-      localStorage.setItem("emailForRegistration", email);
+      localStorage.setItem('emailForRegistration', email);
 
-      setEmail("");
+      setEmail('');
     } catch (err) {
       console.log(err.message);
-      toast.error("Oops! Something went wrong!!");
+      toast.error('Oops! Something went wrong!!');
     }
   };
 
