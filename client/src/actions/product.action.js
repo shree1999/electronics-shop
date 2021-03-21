@@ -67,14 +67,23 @@ export const updateProduct = async (slug, values, token) => {
   }
 };
 
-export const getProductsForHomePage = async (sort, order, limit) => {
+export const getProductsForHomePage = async (sort, order, page) => {
   try {
     const { data } = await axios.post('/api/products/all', {
       sort,
       order,
-      limit,
+      page,
     });
 
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+export const getProductCount = async () => {
+  try {
+    const { data } = await axios.get('/api/products');
     return data;
   } catch (err) {
     throw new Error(err);
