@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "antd";
-import { GoogleOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'antd';
+import { GoogleOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
-import { auth, googleAuthProvider } from "../../firebase";
-import { createOrUpdateUser } from "../../actions/userAction";
+import { auth, googleAuthProvider } from '../../firebase';
+import { createOrUpdateUser } from '../../actions/userAction';
 
 const Login = ({ history }) => {
-  const [password, setPassword] = useState("123456789");
-  const [email, setEmail] = useState("gupta.shreeansh54@gmail.com");
+  const [password, setPassword] = useState('123456789');
+  const [email, setEmail] = useState('gupta.shreeansh54@gmail.com');
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -18,11 +18,17 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (authUser && authUser.email) {
-      // redirecting user based on role
-      if (authUser.role === "admin") {
-        history.push("/admin/dashboard");
+      // based on intended
+      let intended = history.location.state;
+      if (intended) {
+        history.push(intended.from);
       } else {
-        history.push("/user/history");
+        // redirecting user based on role
+        if (authUser.role === 'admin') {
+          history.push('/admin/dashboard');
+        } else {
+          history.push('/user/history');
+        }
       }
     }
   }, [authUser, history]);

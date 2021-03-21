@@ -26,6 +26,6 @@ router
 
 router.route('/all').post(listProducts);
 
-router.put('/rating/:id', productStarRating);
+router.put('/rating/:id', authCheck, productStarRating);
 
 module.exports = router;
