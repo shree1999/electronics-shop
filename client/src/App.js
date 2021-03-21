@@ -14,6 +14,7 @@ import Home from './pages/Home';
 import History from './pages/users/History';
 import Wishlist from './pages/users/Wishlist';
 import Password from './pages/users/Password';
+import { ProductPage } from './pages/Product';
 
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CreateCategory from './pages/admin/Category/CreateCategory';
@@ -58,6 +59,7 @@ const App = () => {
         <Route path="/register" component={Register} exact />
         <Route path="/register/complete" component={RegisterComplete} />
         <Route path="/forgot/password" component={ForgotPassword} />
+        <Route path="/product/:slug" component={ProductPage} />
         <PrivateUserRoute path="/user/history" component={History} />
         <PrivateUserRoute path="/user/password" component={Password} />
         <PrivateUserRoute path="/user/wishlist" component={Wishlist} />
