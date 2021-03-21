@@ -10,8 +10,8 @@ import Laptop from '../../images/laptop.png';
 import { ProductListItems } from './ProductListItem';
 import RatingModal from '../Modals/RatingModal';
 
-export const SingleProduct = ({ product }) => {
-  const { title, description, images, _id, slug } = product;
+export const SingleProduct = ({ product, star, onReviewClick }) => {
+  const { title, description, images, _id } = product;
 
   return (
     <>
@@ -51,9 +51,9 @@ export const SingleProduct = ({ product }) => {
                 numberOfStars={5}
                 starRatedColor="red"
                 name={_id}
-                rating={2}
-                changeRating={(newRating, name) => console.log(newRating)}
-                isSelectable
+                rating={star}
+                changeRating={onReviewClick}
+                isSelectable={true}
               />
             </RatingModal>,
           ]}

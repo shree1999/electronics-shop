@@ -89,3 +89,19 @@ export const getProductCount = async () => {
     throw new Error(err);
   }
 };
+
+export const reviewProduct = async (star, token, id) => {
+  try {
+    const res = await axios.put(
+      `/api/products/rating/${id}`,
+      { star },
+      {
+        headers: { authToken: token },
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
