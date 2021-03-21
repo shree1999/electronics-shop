@@ -32,6 +32,7 @@ export const SingleProduct = ({ product }) => {
       </div>
 
       <div className="col-md-5">
+        <h1 className="bg-info p-3">{title}</h1>
         <Card
           actions={[
             <>
