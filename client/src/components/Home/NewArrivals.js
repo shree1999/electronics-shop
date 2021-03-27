@@ -7,6 +7,7 @@ import {
 } from '../../actions/product.action';
 import { HomeProductCard } from '../Cards/ProductCard';
 import LoadingCard from '../Cards/LoadingCard';
+import { showAverage } from '../AvgRating';
 
 export const NewArrivals = () => {
   const [products, setProducts] = useState([]);
@@ -52,6 +53,7 @@ export const NewArrivals = () => {
           <div className="row">
             {products.map(product => (
               <div key={product._id} className="col-md-4">
+                {showAverage(product)}
                 <HomeProductCard product={product} />
               </div>
             ))}

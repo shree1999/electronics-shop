@@ -8,7 +8,10 @@ const Home = () => {
   return (
     <>
       <div className="jumbotron">
-        <h1 className="display-3 text-center text-primary">
+        <h1
+          className="display-3 text-danger text-primary"
+          style={{ fontWeight: 'bold' }}
+        >
           <Jumbotron text={['Latest Products', 'New Arrivals']} />
         </h1>
       </div>
