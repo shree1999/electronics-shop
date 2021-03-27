@@ -2,6 +2,7 @@ const slugify = require('slugify');
 
 const Category = require('../models/category.model');
 const Sub = require('../models/subcategory.model');
+const Product = require('../models/product.model');
 
 /*
   @route -> POST /api/category, 
@@ -59,7 +60,11 @@ const readCategory = async (req, res) => {
       return res.status(400).send({ error: 'Category not found' });
     }
 
-    res.send(category);
+    const products = await Product.find({ category })
+      .populate('category')
+      .exec();
+
+    res.send({ category, products });
   } catch (err) {
     console.error(err.message);
     res.status(400).send({ error: 'Something went wrong' });

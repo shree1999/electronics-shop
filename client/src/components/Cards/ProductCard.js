@@ -21,6 +21,7 @@ export const HomeProductCard = ({ product }) => {
           <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
         </>,
       ]}
+      style={{ width: '300px' }}
     >
       <Card.Meta
         title={title}
