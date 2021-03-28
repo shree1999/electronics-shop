@@ -163,24 +163,22 @@ exports.productStarRating = async (req, res) => {
   }
 };
 
-exports.searchResult = async (req, res) => {
-  try {
-    const { query } = req.body;
-    if (query) {
-      const products = await Product.find({
-        $text: { $search: req.body.search },
-      })
-        .populate('subs', '_id name')
-        .populate('category', '_id name')
-        .populate('postedBy', '_id name')
-        .exec();
+// Filter and Search
+const handleQuery = async (req, res, query) => {
+  const products = await Product.find({ $text: { $search: query } })
+    .populate('category', '_id name')
+    .populate('subs', '_id name')
+    .populate('postedBy', '_id name')
+    .exec();
 
-      res.send(products);
-    } else {
-      res.status(400).send({ error: 'No Search Text' });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ error: 'Something went wrong' });
+  res.send(products);
+};
+
+exports.searchFilters = async (req, res) => {
+  const { query } = req.body;
+
+  if (query) {
+    console.log('query', query);
+    await handleQuery(req, res, query);
   }
 };

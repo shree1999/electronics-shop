@@ -31,6 +31,15 @@ export const fetchProductsByLimit = limit => async dispatch => {
   }
 };
 
+export const fetchProductsByNumber = async limit => {
+  try {
+    const res = await axios.get(`/api/products/${limit}`);
+    return res;
+  } catch (err) {
+    throw new Error(err.response.data.error);
+  }
+};
+
 export const deleteProduct = async (slug, token) => {
   try {
     const res = await axios.delete(`/api/products/${slug}`, {
@@ -103,5 +112,16 @@ export const reviewProduct = async (star, token, id) => {
     return res.data;
   } catch (err) {
     throw new Error(err);
+  }
+};
+
+export const filterProducts = async args => {
+  try {
+    console.log(args);
+    const { data } = await axios.post('/api/products/search/filters', args);
+
+    return data;
+  } catch (err) {
+    throw new Error(err.response.data.error);
   }
 };

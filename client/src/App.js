@@ -10,6 +10,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import RegisterComplete from './pages/auth/RegisterComplete';
 
 import Home from './pages/Home';
+import Shop from './pages/Shop';
 
 import History from './pages/users/History';
 import Wishlist from './pages/users/Wishlist';
@@ -56,6 +57,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route path="/" component={Home} exact />
+        <Route path="/shop" component={Shop} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} exact />
         <Route path="/register/complete" component={RegisterComplete} />

@@ -7,6 +7,7 @@ import {
   UserOutlined,
   LogoutOutlined,
   EditOutlined,
+  ShopOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
@@ -45,6 +46,10 @@ const Header = () => {
     <Menu onClick={onClickHandler} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<HomeOutlined />}>
         <Link to="/">Home</Link>
+      </Item>
+
+      <Item key="shop" icon={<ShopOutlined />}>
+        <Link to="/shop">Shop</Link>
       </Item>
 
       {email && (
