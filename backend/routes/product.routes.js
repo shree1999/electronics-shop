@@ -10,6 +10,7 @@ const {
   listProducts,
   productsCount,
   productStarRating,
+  searchResult,
 } = require('../controllers/product.controller');
 
 const router = express.Router();
@@ -28,5 +29,7 @@ router
 router.route('/all').post(listProducts);
 
 router.put('/rating/:id', authCheck, productStarRating);
+
+router.get('/search', searchResult);
 
 module.exports = router;

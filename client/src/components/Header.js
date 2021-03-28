@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Menu } from "antd";
+import React, { useState } from 'react';
+import { Menu } from 'antd';
 import {
   HomeOutlined,
   SettingOutlined,
@@ -7,18 +7,19 @@ import {
   UserOutlined,
   LogoutOutlined,
   EditOutlined,
-} from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import firebase from "firebase/app";
-import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import firebase from 'firebase/app';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { USER_LOGGED_OUT } from "../constants";
+import { USER_LOGGED_OUT } from '../constants';
+import Search from './Forms/Search';
 
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState('home');
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -37,7 +38,7 @@ const Header = () => {
       payload: {},
     });
 
-    history.push("/login");
+    history.push('/login');
   };
 
   return (
@@ -50,10 +51,10 @@ const Header = () => {
         <SubMenu
           key="SubMenu"
           icon={<SettingOutlined />}
-          title={email && email.split("@")[0]}
+          title={email && email.split('@')[0]}
           className="float-right"
         >
-          {email && role === "admin" ? (
+          {email && role === 'admin' ? (
             <React.Fragment>
               <Item key="setting:1" icon={<EditOutlined />}>
                 <Link to="/admin/dashboard">Dashboard</Link>
@@ -91,6 +92,9 @@ const Header = () => {
           </Item>
         </React.Fragment>
       )}
+      <span className="float-right p-1">
+        <Search />
+      </span>
     </Menu>
   );
 };

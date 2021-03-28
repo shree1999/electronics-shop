@@ -10,10 +10,10 @@ const Home = () => {
     <>
       <div className="jumbotron">
         <h1
-          className="display-3 text-danger text-primary"
+          className="display-3 text-danger text-primary text-center"
           style={{ fontWeight: 'bold' }}
         >
-          <Jumbotron text={['Latest Products', 'New Arrivals']} />
+          <Jumbotron text={['Best Products', 'New Arrivals', 'Welcome']} />
         </h1>
       </div>
 
