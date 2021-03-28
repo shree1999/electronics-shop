@@ -5,8 +5,8 @@ import StarRating from 'react-star-ratings';
 // 5 + 6 = 11
 // 11 + 7 = 18
 export const showAverage = p => {
-  if (p && p.ratings) {
-    let ratingsArray = p.ratings;
+  if (p && p.ratings && p.ratings.length > 0) {
+    let ratingsArray = p && p.ratings;
     let total = [];
     let length = ratingsArray.length;
 
@@ -30,5 +30,7 @@ export const showAverage = p => {
         </span>
       </div>
     );
+  } else {
+    return '';
   }
 };

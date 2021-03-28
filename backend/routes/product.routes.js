@@ -18,10 +18,11 @@ router.route('/').post(authCheck, adminCheck, createProduct).get(productsCount);
 
 router.route('/:limit').get(getAllProducts);
 
+router.get('/single/:slug', getSingleProduct);
+
 router
   .route('/:slug')
   .delete(authCheck, adminCheck, deleteProduct)
-  .get(getSingleProduct)
   .put(authCheck, adminCheck, updateProduct);
 
 router.route('/all').post(listProducts);

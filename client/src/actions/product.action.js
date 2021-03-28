@@ -47,7 +47,7 @@ export const deleteProduct = async (slug, token) => {
 
 export const fetchSingleProduct = async slug => {
   try {
-    const res = await axios.get(`/api/products/${slug}`);
+    const res = await axios.get(`/api/products/single/${slug}`);
 
     return res.data;
   } catch (err) {

@@ -27,8 +27,7 @@ export const ProductPage = ({ match }) => {
   const loadProduct = async () => {
     try {
       const data = await fetchSingleProduct(match.params.slug);
-
-      setProduct(data[0]);
+      setProduct(data);
     } catch (err) {
       console.error(err);
     }
