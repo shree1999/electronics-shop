@@ -46,18 +46,18 @@ export const ProductUpdate = ({ match }) => {
   const loadProduct = async () => {
     try {
       const data = await fetchSingleProduct(slug);
-      setValues(prevState => ({ ...prevState, ...data[0] }));
+      setValues(prevState => ({ ...prevState, ...data }));
 
-      const res = await getSubsOfCategory(data[0].category._id);
+      const res = await getSubsOfCategory(data.category._id);
       setSubOptions(res.data);
 
       let arr = [];
-      data[0].subs.map(s => {
+      data.subs.map(s => {
         arr.push(s._id);
       });
       console.log('ARR', arr);
       setArrayOfSubs(prev => arr);
-      setSelectedCategory(data[0].category._id);
+      setSelectedCategory(data.category._id);
     } catch (err) {
       toast.error(err.message);
     }

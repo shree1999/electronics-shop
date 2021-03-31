@@ -46,7 +46,10 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
 });
 
 exports.getSingleProduct = asyncHandler(async (req, res, next) => {
-  const product = await Product.findOne({ slug: req.params.slug });
+  const product = await Product.findOne({ slug: req.params.slug })
+    .populate('subs')
+    .populate('category')
+    .exec();
   if (!product) {
     return next({ message: 'Product Not Available', statusCode: 200 });
   }
