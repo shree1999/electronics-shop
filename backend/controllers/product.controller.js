@@ -76,26 +76,6 @@ exports.updateProduct = async (req, res) => {
     });
   }
 };
-
-// Without Pagination
-// exports.listProducts = async (req, res) => {
-//   try {
-//     //      sort               order    limit
-//     // createdAt/updatedAt,   desc/asc,   3
-//     const { sort, order, limit } = req.body;
-//     const products = await Product.find({})
-//       .populate('category')
-//       .populate('subs')
-//       .sort([[sort, order]])
-//       .limit(limit)
-//       .exec();
-
-//     res.json(products);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
 // with pagination
 exports.listProducts = async (req, res) => {
   try {
@@ -174,7 +154,7 @@ const handleQuery = async (req, res, query) => {
     .populate('postedBy', '_id name')
     .exec();
 
-  res.send(products);
+  return res.send(products);
 };
 
 const handlePrice = async (req, res, price) => {
@@ -189,7 +169,7 @@ const handlePrice = async (req, res, price) => {
       .populate('subs', '_id name')
       .populate('postedBy', '_id name')
       .exec();
-    res.send(products);
+    return res.send(products);
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: 'Something went wrong' });
@@ -204,7 +184,7 @@ const handleCategory = async (req, res, category) => {
       .populate('postedBy', '_id name')
       .exec();
 
-    res.send(products);
+    return res.send(products);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Something went wrong' });
@@ -232,7 +212,7 @@ const handleStarRating = (req, res, stars) => {
         .populate('postedBy', '_id name')
         .exec((err, products) => {
           if (err) console.log('PRODUCT AGGREGATE ERROR', err);
-          res.send(products);
+          return res.send(products);
         });
     });
 };
@@ -245,7 +225,7 @@ const handleSubsFilter = async (req, res, sub) => {
       .populate('postedBy', '_id name')
       .exec();
 
-    res.send(products);
+    return res.send(products);
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: 'Something went wrong' });
@@ -259,7 +239,7 @@ const handleColorFilter = async (req, res, color) => {
       .populate('postedBy', '_id name')
       .exec();
 
-    res.send(products);
+    return res.send(products);
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: 'Something went wrong' });
@@ -272,10 +252,28 @@ const handleBrandFilter = async (req, res, brand) => {
       .populate('subs', '_id name')
       .populate('postedBy', '_id name')
       .exec();
-    res.send(products);
+    return res.send(products);
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: 'Something went wrong' });
+  }
+};
+
+// Without Pagination
+const listProducts = async (req, res) => {
+  try {
+    //      sort               order    limit
+    // createdAt/updatedAt,   desc/asc,   3
+    const products = await Product.find({})
+      .populate('category', '_id name')
+      .populate('subs', '_id name')
+      .populate('postedBy', '_id, name')
+      .limit(12)
+      .exec();
+
+    return res.send(products);
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -290,7 +288,7 @@ exports.searchFilters = async (req, res) => {
     console.log('price ---> ', price);
     await handlePrice(req, res, price);
   }
-  if (category) {
+  if (category && category.length > 0) {
     console.log('category ---> ', category);
     await handleCategory(req, res, category);
   }
@@ -310,4 +308,6 @@ exports.searchFilters = async (req, res) => {
     console.log('brand --->', brand);
     await handleBrandFilter(req, res, brand);
   }
+
+  await listProducts(req, res);
 };

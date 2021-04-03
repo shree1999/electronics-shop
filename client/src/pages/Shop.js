@@ -200,6 +200,7 @@ const Shop = () => {
         checked={b === brand}
         onChange={handleBrand}
         className="pb-1 pl-4 pr-4"
+        key={b}
       >
         {b}
       </Radio>
@@ -227,6 +228,7 @@ const Shop = () => {
         checked={c === color}
         onChange={handleColor}
         className="pb-1 pl-4 pr-4"
+        key={c}
       >
         {c}
       </Radio>
@@ -317,7 +319,7 @@ const Shop = () => {
               <div style={{ maringTop: '-10px' }}>{showBrands()}</div>
             </Menu.SubMenu>
             <Menu.SubMenu
-              key="5"
+              key="6"
               title={
                 <span className="h6">
                   <DownSquareOutlined /> Colors
