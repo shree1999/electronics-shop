@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Menu, Slider } from 'antd';
+import { DollarOutlined } from '@ant-design/icons';
 
 import { HomeProductCard } from '../components/Cards/ProductCard';
 import {
   filterProducts,
   fetchProductsByNumber,
 } from '../actions/product.action';
+import { SEARCH_QUERY } from '../constants';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [price, setPrice] = useState([0, 0]);
+  const [ok, setOk] = useState(false);
 
   let search = useSelector(state => state.search);
   const { text } = search;
-  console.log(text);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadProducts() {
@@ -31,14 +37,6 @@ const Shop = () => {
     loadProducts();
   }, []);
 
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      fetchSearchProducts({ query: text });
-    }, 300);
-
-    return () => clearTimeout(delay);
-  }, [text]);
-
   const fetchSearchProducts = async args => {
     try {
       const data = await filterProducts(args);
@@ -48,11 +46,55 @@ const Shop = () => {
     }
   };
 
+  // 1. Using search bar
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      fetchSearchProducts({ query: text });
+    }, 300);
+
+    return () => clearTimeout(delay);
+  }, [text]);
+
+  // 2. using price range
+  useEffect(() => {
+    fetchSearchProducts({ price });
+  }, [ok]);
+
+  const setPriceRangeHandler = value => {
+    dispatch({ type: SEARCH_QUERY, payload: { text: '' } });
+    setPrice(value);
+    setTimeout(() => {
+      setOk(!ok);
+    }, 300);
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-3">
-          <h3>search/filter menu</h3>
+        <div className="col-md-3 pt-2">
+          <h4>search/filter menu</h4>
+          <hr />
+          <Menu defaultOpenKeys={['1', '2']} mode="inline">
+            <Menu.SubMenu
+              key="1"
+              title={
+                <span className="h6">
+                  <DollarOutlined /> Price
+                </span>
+              }
+            >
+              <div>
+                <Slider
+                  className="ml-4 mr-4"
+                  tipFormatter={v => `$${v}`}
+                  range
+                  value={price}
+                  max="4999"
+                  onChange={setPriceRangeHandler}
+                />
+              </div>
+            </Menu.SubMenu>
+          </Menu>
         </div>
 
         <div className="col-md-9">

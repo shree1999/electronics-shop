@@ -12,6 +12,7 @@ const Search = () => {
   const history = useHistory();
 
   const handleChange = e => {
+    console.log(e.target.value);
     dispatch({
       type: SEARCH_QUERY,
       payload: { text: e.target.value },
