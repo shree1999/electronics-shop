@@ -12,7 +12,7 @@ export const ProductCreateForm = ({
   setValues,
 }) => {
   const colors = ['Black', 'Brown', 'Silver', 'White', 'Blue'];
-  const brand = ['Apple', 'Lenovo', 'Sony', 'Samsung'];
+  const brand = ['Apple', 'Lenovo', 'Sony', 'Samsung', 'Hp'];
 
   return (
     <form onSubmit={onSubmitForm}>

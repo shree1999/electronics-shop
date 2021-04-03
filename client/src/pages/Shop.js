@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Menu, Slider, Checkbox } from 'antd';
-import { DollarOutlined, DownSquareOutlined } from '@ant-design/icons';
+import {
+  DollarOutlined,
+  DownSquareOutlined,
+  StarOutlined,
+} from '@ant-design/icons';
 
 import { HomeProductCard } from '../components/Cards/ProductCard';
+import { Star } from '../components/Forms/Star';
 import {
   filterProducts,
   fetchProductsByNumber,
@@ -18,6 +23,7 @@ const Shop = () => {
   const [ok, setOk] = useState(false);
   const [cats, setCats] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
+  const [star, setStar] = useState('');
 
   let search = useSelector(state => state.search);
   const { text } = search;
@@ -69,6 +75,7 @@ const Shop = () => {
     dispatch({ type: SEARCH_QUERY, payload: { text: '' } });
     setCategoryIds([]);
     setPrice(value);
+    setStar('');
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -98,6 +105,7 @@ const Shop = () => {
       payload: { text: '' },
     });
     setPrice([0, 0]);
+    setStar('');
     // console.log(e.target.value);
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -116,13 +124,35 @@ const Shop = () => {
     fetchSearchProducts({ category: inTheState });
   };
 
+  // 4. Handle Star rating filter
+  const showStars = () =>
+    [5, 4, 3, 2, 1].map(ele => (
+      <Star
+        numberOfStars={ele}
+        key={ele.toString()}
+        handleSearch={handleStarClick}
+      />
+    ));
+
+  const handleStarClick = num => {
+    // console.log(num);
+    dispatch({
+      type: SEARCH_QUERY,
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar(num);
+    fetchSearchProducts({ stars: num });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-3 pt-2">
           <h4>search/filter menu</h4>
           <hr />
-          <Menu defaultOpenKeys={['1', '2']} mode="inline">
+          <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
             <Menu.SubMenu
               key="1"
               title={
@@ -151,6 +181,18 @@ const Shop = () => {
               }
             >
               <div style={{ maringTop: '-10px' }}>{showCategories()}</div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <StarOutlined /> Ratings
+                </span>
+              }
+            >
+              <div style={{ maringTop: '-10px', marginLeft: '25px' }}>
+                {showStars()}
+              </div>
             </Menu.SubMenu>
           </Menu>
         </div>
