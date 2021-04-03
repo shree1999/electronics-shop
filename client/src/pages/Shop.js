@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Menu, Slider, Checkbox } from 'antd';
+import { Menu, Slider, Checkbox, Radio } from 'antd';
 import {
   DollarOutlined,
   DownSquareOutlined,
@@ -14,6 +14,7 @@ import {
   fetchProductsByNumber,
 } from '../actions/product.action';
 import { getCategories } from '../actions/category.action';
+import { getAllSubCategories } from '../actions/sub.action';
 import { SEARCH_QUERY } from '../constants';
 
 const Shop = () => {
@@ -24,6 +25,12 @@ const Shop = () => {
   const [cats, setCats] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState('');
+  const [subs, setSubs] = useState([]);
+  const [sub, setSub] = useState('');
+  const brands = ['Apple', 'Lenovo', 'Sony', 'Samsung', 'Hp'];
+  const [brand, setBrand] = useState('');
+  const colors = ['Black', 'Brown', 'Silver', 'White', 'Blue'];
+  const [color, setColor] = useState('');
 
   let search = useSelector(state => state.search);
   const { text } = search;
@@ -35,9 +42,11 @@ const Shop = () => {
       try {
         setLoading(true);
         const { data } = await fetchProductsByNumber(10);
-        setProducts(data);
         const res = await getCategories();
+        const res2 = await getAllSubCategories();
+        setProducts(data);
         setCats(res.data);
+        setSubs(res2.data);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -76,6 +85,9 @@ const Shop = () => {
     setCategoryIds([]);
     setPrice(value);
     setStar('');
+    setSub('');
+    setBrand('');
+    setColor('');
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -106,6 +118,9 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setStar('');
+    setSub('');
+    setBrand('');
+    setColor('');
     // console.log(e.target.value);
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -142,8 +157,93 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setCategoryIds([]);
+    setSub('');
     setStar(num);
+    setBrand('');
+    setColor('');
     fetchSearchProducts({ stars: num });
+  };
+
+  // 4. Filter by sub categories
+  const showAllSubCategories = () =>
+    subs.map(s => (
+      <div
+        className="p-1 m-1 badge badge-secondary"
+        style={{ cursor: 'pointer' }}
+        key={s._id}
+        onClick={() => fetchUsingSub(s)}
+      >
+        {s.name}
+      </div>
+    ));
+  const fetchUsingSub = sub => {
+    // console.log("SUB", sub);
+    setSub(sub);
+    dispatch({
+      type: SEARCH_QUERY,
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    setBrand('');
+    setColor('');
+    fetchSearchProducts({ subs: sub });
+  };
+
+  // 5. Brand Filter
+  const showBrands = () =>
+    brands.map(b => (
+      <Radio
+        value={b}
+        name={b}
+        checked={b === brand}
+        onChange={handleBrand}
+        className="pb-1 pl-4 pr-4"
+      >
+        {b}
+      </Radio>
+    ));
+
+  const handleBrand = e => {
+    setSub('');
+    dispatch({
+      type: SEARCH_QUERY,
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    setBrand(e.target.value);
+    fetchSearchProducts({ brand: e.target.value });
+  };
+
+  // 6. Color Filter
+  const showColors = () =>
+    colors.map(c => (
+      <Radio
+        value={c}
+        name={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="pb-1 pl-4 pr-4"
+      >
+        {c}
+      </Radio>
+    ));
+
+  const handleColor = e => {
+    setSub('');
+    dispatch({
+      type: SEARCH_QUERY,
+      payload: { text: '' },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar('');
+    setBrand('');
+    setColor(e.target.value);
+    fetchSearchProducts({ color: e.target.value });
   };
 
   return (
@@ -152,7 +252,7 @@ const Shop = () => {
         <div className="col-md-3 pt-2">
           <h4>search/filter menu</h4>
           <hr />
-          <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
+          <Menu defaultOpenKeys={['1', '2', '3', '4', '5', '6']} mode="inline">
             <Menu.SubMenu
               key="1"
               title={
@@ -193,6 +293,38 @@ const Shop = () => {
               <div style={{ maringTop: '-10px', marginLeft: '25px' }}>
                 {showStars()}
               </div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="4"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Sub-Categories
+                </span>
+              }
+            >
+              <div style={{ maringTop: '-10px', marginLeft: '25px' }}>
+                {showAllSubCategories()}
+              </div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="5"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Brands
+                </span>
+              }
+            >
+              <div style={{ maringTop: '-10px' }}>{showBrands()}</div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="5"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Colors
+                </span>
+              }
+            >
+              <div style={{ maringTop: '-10px' }}>{showColors()}</div>
             </Menu.SubMenu>
           </Menu>
         </div>

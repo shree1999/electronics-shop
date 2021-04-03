@@ -237,8 +237,50 @@ const handleStarRating = (req, res, stars) => {
     });
 };
 
+const handleSubsFilter = async (req, res, sub) => {
+  try {
+    const products = await Product.find({ subs: sub })
+      .populate('category', '_id name')
+      .populate('subs', '_id name')
+      .populate('postedBy', '_id name')
+      .exec();
+
+    res.send(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: 'Something went wrong' });
+  }
+};
+const handleColorFilter = async (req, res, color) => {
+  try {
+    const products = await Product.find({ color })
+      .populate('category', '_id name')
+      .populate('subs', '_id name')
+      .populate('postedBy', '_id name')
+      .exec();
+
+    res.send(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: 'Something went wrong' });
+  }
+};
+const handleBrandFilter = async (req, res, brand) => {
+  try {
+    const products = await Product.find({ brand })
+      .populate('category', '_id name')
+      .populate('subs', '_id name')
+      .populate('postedBy', '_id name')
+      .exec();
+    res.send(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: 'Something went wrong' });
+  }
+};
+
 exports.searchFilters = async (req, res) => {
-  const { query, price, category, stars } = req.body;
+  const { query, price, category, stars, subs, color, brand } = req.body;
 
   if (query) {
     console.log('query', query);
@@ -254,6 +296,18 @@ exports.searchFilters = async (req, res) => {
   }
   if (stars) {
     console.log('Stars ---> ', stars);
-    await handleStarRating(req, res, stars);
+    handleStarRating(req, res, stars);
+  }
+  if (subs) {
+    console.log('subs --->', subs);
+    await handleSubsFilter(req, res, subs);
+  }
+  if (color) {
+    console.log('color --->', color);
+    await handleColorFilter(req, res, color);
+  }
+  if (brand) {
+    console.log('brand --->', brand);
+    await handleBrandFilter(req, res, brand);
   }
 };
