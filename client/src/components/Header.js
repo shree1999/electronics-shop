@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Menu } from 'antd';
+import { Menu, Badge } from 'antd';
 import {
-  HomeOutlined,
+  AppstoreOutlined,
   SettingOutlined,
   UserAddOutlined,
   UserOutlined,
   LogoutOutlined,
   EditOutlined,
   ShopOutlined,
+  ShoppingCartOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
@@ -24,7 +25,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const auth = useSelector(state => state.auth);
+  const { auth, cart } = useSelector(state => ({ ...state }));
 
   const { email, role } = auth;
 
@@ -44,12 +45,19 @@ const Header = () => {
 
   return (
     <Menu onClick={onClickHandler} selectedKeys={[current]} mode="horizontal">
-      <Item key="home" icon={<HomeOutlined />}>
+      <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
       </Item>
 
       <Item key="shop" icon={<ShopOutlined />}>
         <Link to="/shop">Shop</Link>
+      </Item>
+      <Item key="cart" icon={<ShoppingCartOutlined />}>
+        <Link to="/cart">
+          <Badge count={cart.length} offset={[10, 0]}>
+            Cart
+          </Badge>
+        </Link>
       </Item>
 
       {email && (

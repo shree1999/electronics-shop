@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import { HomeProductCard } from '../../components/Cards/ProductCard';
 import { getCategory } from '../../actions/category.action';

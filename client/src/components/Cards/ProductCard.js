@@ -1,9 +1,17 @@
-import { Card } from 'antd';
+import { useState } from 'react';
+import { Card, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+
+import { handleAddToCart } from '../../actions/cart.action';
 
 export const HomeProductCard = ({ product }) => {
+  const [toolTip, setToolTip] = useState('Add to Cart');
+
   const { images, slug, title, description } = product;
+  const dispatch = useDispatch();
+
   return (
     <Card
       cover={
@@ -17,9 +25,11 @@ export const HomeProductCard = ({ product }) => {
         <Link to={`/product/${slug}`}>
           <EyeOutlined className="text-warning" /> <br /> View Product
         </Link>,
-        <>
-          <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
-        </>,
+        <Tooltip title={toolTip}>
+          <a onClick={() => dispatch(handleAddToCart(product, setToolTip))}>
+            <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
+          </a>
+        </Tooltip>,
       ]}
       style={{ width: '300px' }}
     >

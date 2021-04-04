@@ -1,4 +1,4 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../constants";
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../constants';
 
 const authReduer = (state = {}, action) => {
   switch (action.type) {

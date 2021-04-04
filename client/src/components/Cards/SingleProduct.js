@@ -1,8 +1,9 @@
-import React from 'react';
-import { Card, Tabs } from 'antd';
+import React, { useState } from 'react';
+import { Card, Tabs, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import StarRating from 'react-star-ratings';
+import { useDispatch } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -10,9 +11,14 @@ import Laptop from '../../images/laptop.png';
 import { ProductListItems } from './ProductListItem';
 import RatingModal from '../Modals/RatingModal';
 import { showAverage } from '../AvgRating';
+import { handleAddToCart } from '../../actions/cart.action';
 
 export const SingleProduct = ({ product, star, onReviewClick }) => {
+  const [toolTip, setToolTip] = useState('Add To Cart');
+
   const { title, description, images, _id } = product;
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -45,10 +51,12 @@ export const SingleProduct = ({ product, star, onReviewClick }) => {
         )}
         <Card
           actions={[
-            <>
-              <ShoppingCartOutlined className="text-success" /> <br />
-              Add to Cart
-            </>,
+            <Tooltip title={toolTip}>
+              <a onClick={() => dispatch(handleAddToCart(product, setToolTip))}>
+                <ShoppingCartOutlined className="text-success" /> <br />
+                Add to Cart
+              </a>
+            </Tooltip>,
             <Link to="/">
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,
