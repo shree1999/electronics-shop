@@ -8,7 +8,10 @@ import ModalImage from 'react-modal-image';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { ModifyCountOfProduct } from '../../actions/cart.action';
+import {
+  ModifyCountOfProduct,
+  removeCartItem,
+} from '../../actions/cart.action';
 import laptop from '../../images/laptop.png';
 
 export const ProductCardInCheckout = ({ p }) => {
@@ -26,8 +29,10 @@ export const ProductCardInCheckout = ({ p }) => {
   };
 
   const onClickDeleteCartItem = () => {
-    const ans = window.prompt('Are you sure?');
-    console.log(ans);
+    const ans = window.confirm(`Are you sure? you want to remove ${p.title}`);
+    if (ans) {
+      dispatch(removeCartItem(p));
+    }
   };
 
   return (

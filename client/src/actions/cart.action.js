@@ -29,13 +29,29 @@ export const handleAddToCart = (
 };
 
 export const ModifyCountOfProduct = (p, qty) => (dispatch, getState) => {
-  const cartItems = getState().cart;
-  cartItems.map((product, i) => {
-    if (product._id == p._id) {
-      cartItems[i].count = qty;
-    }
-  });
+  if (typeof window !== undefined) {
+    const cartItems = getState().cart;
+    cartItems.map((product, i) => {
+      if (product._id == p._id) {
+        cartItems[i].count = qty;
+      }
+    });
 
-  localStorage.setItem('cart', JSON.stringify(cartItems));
-  dispatch({ type: ADD_CART, payload: cartItems });
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    dispatch({ type: ADD_CART, payload: cartItems });
+  }
+};
+
+export const removeCartItem = p => (dispatch, getState) => {
+  if (typeof window !== undefined) {
+    const cartItems = getState().cart;
+    cartItems.map((product, i) => {
+      if (product._id === p._id) {
+        cartItems.splice(i, 1);
+      }
+    });
+
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    dispatch({ type: ADD_CART, payload: cartItems });
+  }
 };
