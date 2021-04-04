@@ -11,6 +11,7 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 
 import Home from './pages/Home';
 import Shop from './pages/Shop';
+import { CartPage } from './pages/Cart';
 
 import History from './pages/users/History';
 import Wishlist from './pages/users/Wishlist';
@@ -64,6 +65,7 @@ const App = () => {
         <Route path="/forgot/password" component={ForgotPassword} />
         <Route path="/product/:slug" component={ProductPage} />
         <Route path="/category/:slug" component={CategoryPage} />
+        <Route path="/cart" component={CartPage} />
         <PrivateUserRoute path="/user/history" component={History} />
         <PrivateUserRoute path="/user/password" component={Password} />
         <PrivateUserRoute path="/user/wishlist" component={Wishlist} />

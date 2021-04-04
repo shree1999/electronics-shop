@@ -27,3 +27,15 @@ export const handleAddToCart = (
     }
   }
 };
+
+export const ModifyCountOfProduct = (p, qty) => (dispatch, getState) => {
+  const cartItems = getState().cart;
+  cartItems.map((product, i) => {
+    if (product._id == p._id) {
+      cartItems[i].count = qty;
+    }
+  });
+
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+  dispatch({ type: ADD_CART, payload: cartItems });
+};
