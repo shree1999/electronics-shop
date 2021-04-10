@@ -28,6 +28,7 @@ import SubUpdate from './pages/admin/Sub-Categories/SubUpdate';
 import { ProductCreate } from './pages/admin/Products/ProductCreate';
 import { ProductList } from './pages/admin/Products/ProductList';
 import { ProductUpdate } from './pages/admin/Products/ProductUpdate';
+import { CreateCouponPage } from './pages/admin/Coupon/CreateCoupon';
 
 import Header from './components/Header';
 import PrivateUserRoute from './components/routes/PrivateUserRoutes';
@@ -93,6 +94,7 @@ const App = () => {
           path="/admin/product/edit/:slug"
           component={ProductUpdate}
         />
+        <PrivateAdminRoute path="/admin/coupons" component={CreateCouponPage} />
       </Switch>
     </React.Fragment>
   );

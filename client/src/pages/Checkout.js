@@ -60,11 +60,7 @@ export const Checkout = () => {
           <br />
           <br />
           <ReactQuill theme="snow" value={address} onChange={setAddress} />
-          <button
-            className="btn btn-primary mt-2"
-            onClick={saveAddressToDb}
-            disabled={!addressSaved}
-          >
+          <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
             Save
           </button>
           <hr />
@@ -91,7 +87,9 @@ export const Checkout = () => {
 
           <div className="row">
             <div className="col-md-6">
-              <button className="btn btn-primary">Place Order</button>
+              <button className="btn btn-primary" disabled={!addressSaved}>
+                Place Order
+              </button>
             </div>
 
             <div className="col-md-6">
