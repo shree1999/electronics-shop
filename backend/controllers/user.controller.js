@@ -57,6 +57,27 @@ exports.getUserCart = async (req, res) => {
     .populate('products.product', '_id title price totalAfterDiscount')
     .exec();
 
+  if (!cart) {
+    return res.status(400).send({ error: 'No products in cart present' });
+  }
+
   const { products, cartTotal, totalAfterDiscount } = cart;
-  res.json({ products, cartTotal, totalAfterDiscount });
+  res.send({ products, cartTotal, totalAfterDiscount });
+};
+
+exports.emptyCart = async (req, res) => {
+  console.log('empty cart');
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  const cart = await Cart.findOneAndRemove({ orderdBy: user._id }).exec();
+  res.send(cart);
+};
+
+exports.saveAddress = async (req, res) => {
+  await User.findOneAndUpdate(
+    { email: req.user.email },
+    { address: req.body.address }
+  ).exec();
+
+  res.json({ ok: true });
 };

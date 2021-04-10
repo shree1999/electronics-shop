@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { USER_LOGGED_IN } from '../constants';
+import { ADD_CART, USER_LOGGED_IN } from '../constants';
 
 export const createOrUpdateUser = token => async dispatch => {
   try {
@@ -94,5 +94,39 @@ export const getUserCart = async authtoken => {
     return res.data;
   } catch (error) {
     throw new Error(error.response.data.error);
+  }
+};
+
+export const emptyUserCart = authtoken => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/users/user/cart`, {
+      headers: {
+        authtoken,
+      },
+    });
+
+    localStorage.removeItem('cart');
+    dispatch({ type: ADD_CART, payload: [] });
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+export const saveUserAddress = async (address, authtoken) => {
+  try {
+    const res = await axios.post(
+      `/api/users/address`,
+      { address },
+      {
+        headers: {
+          authtoken,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.error);
   }
 };

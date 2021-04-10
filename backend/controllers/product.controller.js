@@ -283,31 +283,25 @@ exports.searchFilters = async (req, res) => {
   if (query) {
     console.log('query', query);
     await handleQuery(req, res, query);
-  }
-  if (price !== undefined) {
+  } else if (price !== undefined) {
     console.log('price ---> ', price);
     await handlePrice(req, res, price);
-  }
-  if (category && category.length > 0) {
+  } else if (category && category.length > 0) {
     console.log('category ---> ', category);
     await handleCategory(req, res, category);
-  }
-  if (stars) {
+  } else if (stars) {
     console.log('Stars ---> ', stars);
     handleStarRating(req, res, stars);
-  }
-  if (subs) {
+  } else if (subs) {
     console.log('subs --->', subs);
     await handleSubsFilter(req, res, subs);
-  }
-  if (color) {
+  } else if (color) {
     console.log('color --->', color);
     await handleColorFilter(req, res, color);
-  }
-  if (brand) {
+  } else if (brand) {
     console.log('brand --->', brand);
     await handleBrandFilter(req, res, brand);
+  } else {
+    await listProducts(req, res);
   }
-
-  await listProducts(req, res);
 };
