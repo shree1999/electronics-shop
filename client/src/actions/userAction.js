@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { USER_LOGGED_IN } from "../constants";
+import { USER_LOGGED_IN } from '../constants';
 
 export const createOrUpdateUser = token => async dispatch => {
   try {
     const res = await axios.post(
-      "/api/auth",
+      '/api/auth',
       {},
       {
         headers: {
@@ -31,7 +31,7 @@ export const createOrUpdateUser = token => async dispatch => {
 export const getCurrentUser = token => async dispatch => {
   try {
     const res = await axios.post(
-      "/api/auth/me",
+      '/api/auth/me',
       {},
       {
         headers: {
@@ -56,7 +56,7 @@ export const getCurrentUser = token => async dispatch => {
 
 export const getAdminUser = async token => {
   return await axios.post(
-    "/api/auth/me/admin",
+    '/api/auth/me/admin',
     {},
     {
       headers: {
@@ -64,4 +64,22 @@ export const getAdminUser = async token => {
       },
     }
   );
+};
+
+export const userCart = async (cart, authtoken) => {
+  try {
+    const res = await axios.post(
+      `/api/users/user/cart`,
+      { cart },
+      {
+        headers: {
+          authtoken,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (error) {
+    throw new Error(err.response.data.error);
+  }
 };

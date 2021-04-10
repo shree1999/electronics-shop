@@ -1,8 +1,11 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ProductCardInCheckout } from '../components/Cards/ProductCartCheckout';
+import { toast } from 'react-toastify';
 
-export const CartPage = () => {
+import { ProductCardInCheckout } from '../components/Cards/ProductCartCheckout';
+import { userCart } from '../actions/userAction';
+
+export const CartPage = ({ history }) => {
   const { auth, cart } = useSelector(state => ({ ...state }));
 
   const getTotal = () => {
@@ -11,7 +14,16 @@ export const CartPage = () => {
     }, 0);
   };
 
-  const saveCartToDB = () => {};
+  const saveCartToDB = async () => {
+    try {
+      const data = await userCart(cart, auth.token);
+      if (data.ok) {
+        history.push('/user/checkout');
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const showCartItemsTable = () => (
     <table className="table table-bordered">

@@ -12,6 +12,7 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import { CartPage } from './pages/Cart';
+import { Checkout } from './pages/Checkout';
 
 import History from './pages/users/History';
 import Wishlist from './pages/users/Wishlist';
@@ -69,6 +70,7 @@ const App = () => {
         <PrivateUserRoute path="/user/history" component={History} />
         <PrivateUserRoute path="/user/password" component={Password} />
         <PrivateUserRoute path="/user/wishlist" component={Wishlist} />
+        <PrivateUserRoute path="/user/checkout" component={Checkout} />
         <PrivateAdminRoute path="/admin/dashboard" component={AdminDashboard} />
         <PrivateAdminRoute
           exact
