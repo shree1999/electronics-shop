@@ -80,6 +80,19 @@ export const userCart = async (cart, authtoken) => {
 
     return res.data;
   } catch (error) {
-    throw new Error(err.response.data.error);
+    throw new Error(error.response.data.error);
+  }
+};
+
+export const getUserCart = async authtoken => {
+  try {
+    const res = await axios.get(`/api/users/user/cart`, {
+      headers: {
+        authtoken,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
   }
 };

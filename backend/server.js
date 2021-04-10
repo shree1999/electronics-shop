@@ -13,6 +13,7 @@ const categoryRoutes = require('./routes/category.routes');
 const subRoutes = require('./routes/sub.routes');
 const productRoutes = require('./routes/product.routes');
 const imageRoutes = require('./routes/cloudinary.routes');
+const userRoutes = require('./routes/user.routes');
 const { errorHander } = require('./middlewares/error.js');
 
 connectDatabase(mongoose); // database connection
@@ -33,6 +34,7 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/subs', subRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/images', imageRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(errorHander);
 
