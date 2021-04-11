@@ -130,3 +130,14 @@ export const saveUserAddress = async (address, authtoken) => {
     throw new Error(err.response.data.error);
   }
 };
+
+export const applyCoupon = async (authtoken, coupon) =>
+  await axios.post(
+    `/api/users/apply/coupon`,
+    { coupon },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );

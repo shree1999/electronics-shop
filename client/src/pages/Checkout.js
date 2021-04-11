@@ -3,19 +3,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Alert } from 'antd';
 
 import {
   emptyUserCart,
   getUserCart,
   saveUserAddress,
+  applyCoupon,
 } from '../actions/userAction';
+import { COUPON_APPLIED } from '../constants';
 
-export const Checkout = () => {
+export const Checkout = ({ history }) => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState('');
   const [addressSaved, setAddressSaved] = useState(false);
-  const [coupon, setCoupon] = useState('');
+  const [userCoupon, setUserCoupon] = useState('');
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
 
   const { auth } = useSelector(state => ({ ...state }));
   const dispatch = useDispatch();
@@ -28,7 +32,7 @@ export const Checkout = () => {
         setProducts(data.products);
         setTotal(data.cartTotal);
       } catch (err) {
-        toast.error(err.message);
+        history.push('/cart');
       }
     }
 
@@ -48,32 +52,61 @@ export const Checkout = () => {
   };
 
   const onClickEmptyCartHandler = () => {
-    dispatch(emptyUserCart(auth.token));
     setProducts([]);
     setTotal(0);
+    setUserCoupon('');
+    setTotalAfterDiscount(0);
+    dispatch(emptyUserCart(auth.token));
+  };
+
+  const applyCouponHandler = () => {
+    applyCoupon(auth.token, userCoupon)
+      .then(res => {
+        if (res.data.totalAfterDiscount) {
+          setTotalAfterDiscount(res.data.totalAfterDiscount);
+          // update redux coupon applied true/false
+          dispatch({
+            type: COUPON_APPLIED,
+            payload: { couponApplied: true },
+          });
+        }
+      })
+      .catch(err => {
+        toast.error(err.response.data.error);
+        dispatch({ type: COUPON_APPLIED, payload: { couponApplied: false } });
+      });
   };
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6">
-          <h4 className="display-4 mb-2">Delivery Address</h4>
+          <h4 className="display-4 mb-3">Delivery Address</h4>
           <ReactQuill theme="snow" value={address} onChange={setAddress} />
-          <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
+          <button
+            className="btn btn-primary mt-2"
+            onClick={saveAddressToDb}
+            disabled={address.length === 0}
+          >
             Save
           </button>
           <hr />
-          <h4 className="display-4 mb-1">Got Coupon?</h4>
+          <h4 className="display-4 my-3">Got Coupon?</h4>
 
           <div className="form-group">
             <input
               type="text"
               className="form-control"
               placeholder="Apply Coupon"
-              value={coupon}
-              onChange={e => setCoupon(e.target.value)}
+              value={userCoupon}
+              onChange={e => setUserCoupon(e.target.value)}
             />
-            <button className="btn btn-primary mt-2">Apply</button>
+            <button
+              className="btn btn-primary mt-2"
+              onClick={applyCouponHandler}
+            >
+              Apply
+            </button>
           </div>
         </div>
 
@@ -91,7 +124,15 @@ export const Checkout = () => {
             </div>
           ))}
           <hr />
-          <p>Cart Total: {total}</p>
+          <p>Cart Total: ${total}</p>
+          {totalAfterDiscount > 0 && (
+            <Alert
+              message="Coupon Applied"
+              description={`The total payable price is $${totalAfterDiscount}`}
+              type="success"
+              showIcon
+            />
+          )}
 
           <div className="row">
             <div className="col-md-6">
