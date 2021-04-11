@@ -47,7 +47,8 @@ export const CreateCouponPage = () => {
       loadCoupons();
       toast.success(`"${res.data.name}" is created`);
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err.response.data.error);
+      setLoading(false);
     }
   };
 

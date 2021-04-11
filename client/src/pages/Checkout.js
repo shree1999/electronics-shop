@@ -15,6 +15,7 @@ export const Checkout = () => {
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState('');
   const [addressSaved, setAddressSaved] = useState(false);
+  const [coupon, setCoupon] = useState('');
 
   const { auth } = useSelector(state => ({ ...state }));
   const dispatch = useDispatch();
@@ -56,17 +57,24 @@ export const Checkout = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6">
-          <h4 className="display-4">Delivery Address</h4>
-          <br />
-          <br />
+          <h4 className="display-4 mb-2">Delivery Address</h4>
           <ReactQuill theme="snow" value={address} onChange={setAddress} />
           <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
             Save
           </button>
           <hr />
-          <h4 className="display-4">Got Coupon?</h4>
-          <br />
-          coupon input and apply button
+          <h4 className="display-4 mb-1">Got Coupon?</h4>
+
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Apply Coupon"
+              value={coupon}
+              onChange={e => setCoupon(e.target.value)}
+            />
+            <button className="btn btn-primary mt-2">Apply</button>
+          </div>
         </div>
 
         <div className="col-md-6">
@@ -87,7 +95,10 @@ export const Checkout = () => {
 
           <div className="row">
             <div className="col-md-6">
-              <button className="btn btn-primary" disabled={!addressSaved}>
+              <button
+                className="btn btn-primary"
+                disabled={!addressSaved || !products.length}
+              >
                 Place Order
               </button>
             </div>
@@ -96,6 +107,7 @@ export const Checkout = () => {
               <button
                 className="btn btn-primary"
                 onClick={onClickEmptyCartHandler}
+                disabled={!products.length}
               >
                 Empty Cart
               </button>
