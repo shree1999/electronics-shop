@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Shop from './pages/Shop';
 import { CartPage } from './pages/Cart';
 import { Checkout } from './pages/Checkout';
+import Payment from './pages/Payment';
 
 import History from './pages/users/History';
 import Wishlist from './pages/users/Wishlist';
@@ -72,6 +73,7 @@ const App = () => {
         <PrivateUserRoute path="/user/password" component={Password} />
         <PrivateUserRoute path="/user/wishlist" component={Wishlist} />
         <PrivateUserRoute path="/user/checkout" component={Checkout} />
+        <PrivateUserRoute path="/user/payment" component={Payment} />
         <PrivateAdminRoute path="/admin/dashboard" component={AdminDashboard} />
         <PrivateAdminRoute
           exact

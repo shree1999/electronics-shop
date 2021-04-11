@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Alert } from 'antd';
+import { Link } from 'react-router-dom';
 
 import {
   emptyUserCart,
@@ -140,7 +141,7 @@ export const Checkout = ({ history }) => {
                 className="btn btn-primary"
                 disabled={!addressSaved || !products.length}
               >
-                Place Order
+                <Link to="/user/payment">Place Order</Link>
               </button>
             </div>
 
