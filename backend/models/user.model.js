@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
   {
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      default: "subscriber",
+      default: 'subscriber',
     },
 
     cart: {
@@ -27,15 +27,15 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
 
-    // wishlist: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Product"
-    //   }
-    // ],
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 module.exports = User;

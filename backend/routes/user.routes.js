@@ -9,6 +9,9 @@ const {
   applyCouponToUserCart,
   createOrder,
   orders,
+  wishlist,
+  addToWishlist,
+  removeFromWishlist,
 } = require('../controllers/user.controller');
 
 const router = express.Router();
@@ -22,6 +25,12 @@ router
   .delete(authCheck, emptyCart);
 
 router.route('/user/order').post(authCheck, createOrder).get(authCheck, orders);
+router
+  .route('/wishlist')
+  .post(authCheck, addToWishlist)
+  .get(authCheck, wishlist);
+
+router.post('/wishlist/:productId', authCheck, removeFromWishlist);
 
 router.post('/address', authCheck, saveAddress);
 

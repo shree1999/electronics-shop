@@ -175,3 +175,31 @@ export const getUserOrders = async authtoken => {
     throw new Error(err);
   }
 };
+export const getWishlist = async authtoken =>
+  await axios.get('/api/users/wishlist', {
+    headers: {
+      authtoken,
+    },
+  });
+
+export const removeWishlist = async (productId, authtoken) =>
+  await axios.put(
+    `/api/users/wishlist/${productId}`,
+    {},
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+
+export const addToWishlist = async (productId, authtoken) =>
+  await axios.post(
+    '/api/users/wishlist',
+    { productId },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
