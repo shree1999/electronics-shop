@@ -77,7 +77,7 @@ const Header = () => {
               </Item>
             </React.Fragment>
           ) : (
-            <Item key="setting:2">
+            <Item key="setting:4">
               <Link to="/user/history">History Dashboard</Link>
             </Item>
           )}
