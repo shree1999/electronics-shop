@@ -52,9 +52,12 @@ export const SingleProduct = ({ product, star, onReviewClick }) => {
         <Card
           actions={[
             <Tooltip title={toolTip}>
-              <a onClick={() => dispatch(handleAddToCart(product, setToolTip))}>
+              <a
+                onClick={() => dispatch(handleAddToCart(product, setToolTip))}
+                disabled={product.quantity < 1}
+              >
                 <ShoppingCartOutlined className="text-success" /> <br />
-                Add to Cart
+                {product.quantity < 1 ? 'Out of stock' : 'Add to Cart'}
               </a>
             </Tooltip>,
             <Link to="/">
