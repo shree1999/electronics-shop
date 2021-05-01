@@ -2,18 +2,11 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserOrders } from '../../actions/userAction';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  PDFDownloadLink,
-  PDFViewer,
-} from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 import UserNav from '../../components/navs/UserNav';
 import { ShowPaymentInfo } from '../../components/Cards/ShowPaymentInfo';
+import Invoice from '../../components/Invoice';
 
 const History = () => {
   const [products, setProducts] = useState([]);
@@ -72,16 +65,7 @@ const History = () => {
 
   const showDownloadLink = order => (
     <PDFDownloadLink
-      document={
-        <Document>
-          <Page size="A4">
-            <View>
-              <Text>Section #1</Text>
-              <Text>Section #2</Text>
-            </View>
-          </Page>
-        </Document>
-      }
+      document={<Invoice order={order} />}
       fileName="invoice.pdf"
       className="btn btn-sm btn-block btn-outline-primary"
     >
@@ -96,9 +80,7 @@ const History = () => {
           <ShowPaymentInfo order={order} />
           {showOrderInTable(order)}
           <div className="row">
-            <div className="col">
-            {showDownloadLink(order)}
-            </div>
+            <div className="col">{showDownloadLink(order)}</div>
           </div>
         </div>
       ))}
