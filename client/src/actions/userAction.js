@@ -183,7 +183,7 @@ export const getWishlist = async authtoken =>
   });
 
 export const removeWishlist = async (productId, authtoken) =>
-  await axios.put(
+  await axios.post(
     `/api/users/wishlist/${productId}`,
     {},
     {

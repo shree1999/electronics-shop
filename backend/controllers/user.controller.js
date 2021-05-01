@@ -177,7 +177,7 @@ exports.addToWishlist = async (req, res) => {
     { $addToSet: { wishlist: productId } }
   ).exec();
 
-  res.json({ ok: true });
+  res.send({ ok: true });
 };
 
 exports.wishlist = async (req, res) => {
@@ -186,7 +186,7 @@ exports.wishlist = async (req, res) => {
     .populate('wishlist')
     .exec();
 
-  res.json(list);
+  res.send(list);
 };
 
 exports.removeFromWishlist = async (req, res) => {
@@ -196,5 +196,5 @@ exports.removeFromWishlist = async (req, res) => {
     { $pull: { wishlist: productId } }
   ).exec();
 
-  res.json({ ok: true });
+  res.send({ ok: true });
 };

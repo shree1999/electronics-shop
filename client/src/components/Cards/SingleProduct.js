@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
 import { Card, Tabs, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import StarRating from 'react-star-ratings';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { toast } from 'react-toastify';
 
 import Laptop from '../../images/laptop.png';
 import { ProductListItems } from './ProductListItem';
 import RatingModal from '../Modals/RatingModal';
 import { showAverage } from '../AvgRating';
 import { handleAddToCart } from '../../actions/cart.action';
+import { addToWishlist } from '../../actions/userAction';
 
 export const SingleProduct = ({ product, star, onReviewClick }) => {
   const [toolTip, setToolTip] = useState('Add To Cart');
+  const auth = useSelector(state => state.auth);
 
   const { title, description, images, _id } = product;
 
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleAddToWishlist = e => {
+    e.preventDefault();
+    addToWishlist(product._id, auth.token).then(res => {
+      console.log('ADDED TO WISHLIST', res.data);
+      toast.success('Added to wishlist');
+      history.push('/user/wishlist');
+    });
+  };
 
   return (
     <>
@@ -60,9 +73,9 @@ export const SingleProduct = ({ product, star, onReviewClick }) => {
                 {product.quantity < 1 ? 'Out of stock' : 'Add to Cart'}
               </a>
             </Tooltip>,
-            <Link to="/">
+            <a onClick={handleAddToWishlist}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-            </Link>,
+            </a>,
             <RatingModal>
               <StarRating
                 numberOfStars={5}
