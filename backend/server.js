@@ -7,8 +7,8 @@ const logger = require('morgan');
 
 dotenv.config();
 
-const { connectDatabase } = require('./config/db.js');
-const authRoutes = require('./routes/auth.routes.js');
+const { connectDatabase } = require('./config/db');
+const authRoutes = require('./routes/auth.routes');
 const categoryRoutes = require('./routes/category.routes');
 const subRoutes = require('./routes/sub.routes');
 const productRoutes = require('./routes/product.routes');
@@ -16,7 +16,8 @@ const imageRoutes = require('./routes/cloudinary.routes');
 const userRoutes = require('./routes/user.routes');
 const coupenRoutes = require('./routes/coupen.routes');
 const paymentRoutes = require('./routes/payment');
-const { errorHander } = require('./middlewares/error.js');
+const adminRoutes = require('./routes/admin.routes');
+const { errorHander } = require('./middlewares/error');
 
 connectDatabase(mongoose); // database connection
 
@@ -39,6 +40,7 @@ app.use('/api/images', imageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/coupens', coupenRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.use(errorHander);
 
