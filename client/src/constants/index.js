@@ -6,3 +6,4 @@ export const FETCH_PRODUCTS_FAIL = 'FETCH_PRODUCTS_FAIL';
 export const SEARCH_QUERY = 'SEARCH_QUERY';
 export const ADD_CART = 'ADD_CART';
 export const COUPON_APPLIED = 'COUPON_APPLIED';
+export const COD_APPLIED = 'COD_APPLIED';

@@ -41,7 +41,11 @@ const AdminDashboard = () => {
         </div>
         <div className="col-md-10">
           <h1 className="display-3">Admin Dashboard</h1>
-          <Orders orders={orders} handleStatusChange={handleStatusChange} />
+          {orders.length > 0 ? (
+            <Orders orders={orders} handleStatusChange={handleStatusChange} />
+          ) : (
+            <p className="lead">No orders placed</p>
+          )}
         </div>
       </div>
     </div>

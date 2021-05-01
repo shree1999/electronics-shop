@@ -269,7 +269,7 @@ const Shop = () => {
                   tipFormatter={v => `$${v}`}
                   range
                   value={price}
-                  max="4999"
+                  max="1000000"
                   onChange={setPriceRangeHandler}
                 />
               </div>

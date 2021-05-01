@@ -5,6 +5,7 @@ import { productReducer } from './productReducer';
 import { searchReducer } from './searchReducer';
 import { cartReducerFunction } from './cartReducer';
 import { couponReducer } from './couponReducer';
+import { CODReducer } from './CODReducer';
 
 export const rootReducers = combineReducers({
   auth: authReduer,
@@ -12,4 +13,5 @@ export const rootReducers = combineReducers({
   search: searchReducer,
   cart: cartReducerFunction,
   coupon: couponReducer,
+  COD: CODReducer,
 });

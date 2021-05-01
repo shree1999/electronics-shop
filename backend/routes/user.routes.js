@@ -12,6 +12,7 @@ const {
   wishlist,
   addToWishlist,
   removeFromWishlist,
+  createCashOrder,
 } = require('../controllers/user.controller');
 
 const router = express.Router();
@@ -31,6 +32,7 @@ router
   .get(authCheck, wishlist);
 
 router.post('/wishlist/:productId', authCheck, removeFromWishlist);
+router.post('/cod-purchase', authCheck, createCashOrder);
 
 router.post('/address', authCheck, saveAddress);
 

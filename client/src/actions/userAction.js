@@ -203,3 +203,15 @@ export const addToWishlist = async (productId, authtoken) =>
       },
     }
   );
+
+// for cash on delivery
+export const createCashOrderForUser = async (authtoken, COD, coupon) =>
+  await axios.post(
+    '/api/users/cod-purchase',
+    { COD, couponApplied: coupon },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );

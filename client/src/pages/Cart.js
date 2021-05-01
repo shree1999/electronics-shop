@@ -1,12 +1,15 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { ProductCardInCheckout } from '../components/Cards/ProductCartCheckout';
 import { userCart } from '../actions/userAction';
+import { Fragment } from 'react';
+import { COD_APPLIED } from '../constants';
 
 export const CartPage = ({ history }) => {
   const { auth, cart } = useSelector(state => ({ ...state }));
+  const dispatch = useDispatch();
 
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
@@ -17,6 +20,21 @@ export const CartPage = ({ history }) => {
   const saveCartToDB = async () => {
     try {
       const data = await userCart(cart, auth.token);
+      if (data.ok) {
+        history.push('/user/checkout');
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const saveCartToDBWithCOD = async () => {
+    try {
+      const data = await userCart(cart, auth.token);
+      dispatch({
+        type: COD_APPLIED,
+        payload: true,
+      });
       if (data.ok) {
         history.push('/user/checkout');
       }
@@ -75,13 +93,23 @@ export const CartPage = ({ history }) => {
           <strong className="lead">Total: ${getTotal()}</strong>
           <hr />
           {auth && auth.email ? (
-            <button
-              className="btn btn-sm btn-primary mt-2"
-              onClick={saveCartToDB}
-              disabled={!cart.length}
-            >
-              Proceed to Checkout
-            </button>
+            <Fragment>
+              <button
+                className="btn btn-sm btn-primary mt-2"
+                onClick={saveCartToDB}
+                disabled={!cart.length}
+              >
+                Proceed to Checkout
+              </button>
+              <br />
+              <button
+                className="btn btn-sm btn-secondary mt-2"
+                onClick={saveCartToDBWithCOD}
+                disabled={!cart.length}
+              >
+                Pay via Cash on Delivery
+              </button>
+            </Fragment>
           ) : (
             <button className="btn btn-sm btn-primary mt-2">
               <Link
