@@ -153,5 +153,18 @@ exports.createOrder = async (req, res) => {
     console.log('NEW ORDER SAVED', newOrder);
     console.log('products update: ', updateProducts);
     res.json({ ok: true });
-  } catch (err) {}
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: 'Something went wrong' });
+  }
+};
+
+exports.orders = async (req, res) => {
+  let user = await User.findOne({ email: req.user.email }).exec();
+
+  let userOrders = await Order.find({ orderdBy: user._id })
+    .populate('products.product')
+    .exec();
+
+  res.send(userOrders);
 };

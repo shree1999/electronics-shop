@@ -161,3 +161,17 @@ export const createOrder = (stripeResponse, token) => async dispatch => {
     throw new Error(err.message);
   }
 };
+
+export const getUserOrders = async authtoken => {
+  try {
+    const res = await axios.get('/api/users/user/order', {
+      headers: {
+        authtoken,
+      },
+    });
+
+    return res;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
