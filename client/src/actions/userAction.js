@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ADD_CART, USER_LOGGED_IN } from '../constants';
+import { ADD_CART, COUPON_APPLIED, USER_LOGGED_IN } from '../constants';
 
 export const createOrUpdateUser = token => async dispatch => {
   try {
@@ -141,3 +141,23 @@ export const applyCoupon = async (authtoken, coupon) =>
       },
     }
   );
+
+export const createOrder = (stripeResponse, token) => async dispatch => {
+  try {
+    const res = await axios.post(
+      '/api/users/user/order',
+      { stripeResponse },
+      { headers: { authtoken: token } }
+    );
+
+    if (res.data.ok) {
+      dispatch({ type: COUPON_APPLIED, payload: false });
+
+      dispatch(emptyUserCart(token));
+    } else {
+      throw new Error('Could Not place order');
+    }
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};

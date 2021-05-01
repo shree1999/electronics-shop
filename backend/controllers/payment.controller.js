@@ -13,13 +13,13 @@ exports.createPaymentForUsers = async (req, res) => {
     orderdBy: user._id,
   }).exec();
   // console.log("CART TOTAL", cartTotal, "AFTER DIS%", totalAfterDiscount);
-  const { cartTotal, totalAfterDiscount } = cart;
+
   let finalAmount = 0;
 
-  if (couponApplied && totalAfterDiscount) {
-    finalAmount = totalAfterDiscount * 100;
+  if (couponApplied && cart.totalAfterDiscount) {
+    finalAmount = cart.totalAfterDiscount * 100;
   } else {
-    finalAmount = cartTotal * 100;
+    finalAmount = (cart.cartTotal || 0) * 100;
   }
 
   const paymentIntent = await stripe.paymentIntents.create({
@@ -30,8 +30,8 @@ exports.createPaymentForUsers = async (req, res) => {
 
   res.send({
     clientSecret: paymentIntent.client_secret,
-    cartTotal,
-    totalAfterDiscount,
+    cartTotal: cart.cartTotal,
+    totalAfterDiscount: cart.totalAfterDiscount,
     payable: finalAmount,
   });
 };

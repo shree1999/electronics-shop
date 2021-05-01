@@ -7,7 +7,7 @@ import { DollarOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { createPaymentIntent } from '../../actions/stripe.action';
 import Laptop from '../../images/laptop.png';
-import { emptyUserCart } from '../../actions/userAction';
+import { createOrder, emptyUserCart } from '../../actions/userAction';
 
 const StripeCheckout = () => {
   const dispatch = useDispatch();
@@ -53,15 +53,12 @@ const StripeCheckout = () => {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
     } else {
-      // here you get result after successful payment
-      // create order and save in database for admin to process
-      // empty user cart from redux store and local storage
-      console.log(JSON.stringify(payload, null, 4));
+      console.log(payload);
+
+      dispatch(createOrder(payload, auth.token));
       setError(null);
       setProcessing(false);
       setSucceeded(true);
-      elements.clear();
-      dispatch(emptyUserCart(auth.token));
     }
   };
 
