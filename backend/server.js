@@ -44,6 +44,7 @@ app.use('/api/admin', adminRoutes);
 
 app.use(errorHander);
 
-app.listen(PORT, () => {
-  console.log(`Server up and running on port ${PORT}`);
-});
+module.exports = {
+  app,
+  PORT,
+}; // for testing

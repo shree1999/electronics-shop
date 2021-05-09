@@ -26,6 +26,10 @@ exports.getAllProducts = asyncHandler(async (req, res, next) => {
     .sort({ createdAt: -1 })
     .exec();
 
+  if (products.length === 0) {
+    return next({ message: 'No products availaible', statusCode: 204 });
+  }
+
   res.send(products);
 });
 
@@ -268,7 +272,6 @@ const listProducts = async (req, res) => {
       .populate('category', '_id name')
       .populate('subs', '_id name')
       .populate('postedBy', '_id, name')
-      .limit(12)
       .exec();
 
     return res.send(products);
