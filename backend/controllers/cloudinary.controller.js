@@ -18,7 +18,7 @@ const uploadImages = async (req, res) => {
       url: result.secure_url,
     });
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     res.status(500).send({ error: 'Something went wrong' });
   }
 };
