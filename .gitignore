@@ -140,6 +140,5 @@ googleConfig.json
 
 ### Firebase Patch ###
 .runtimeconfig.json
-firebase.js
 
 # End of https://www.toptal.com/developers/gitignore/api/firebase
