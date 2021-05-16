@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { LoadingOutlined } from '@ant-design/icons';
+import ReactQuill from 'react-quill';
 
 import AdminNav from '../../../components/navs/AdminNav';
 import { createProduct } from '../../../actions/product.action';
@@ -11,11 +12,11 @@ import {
 } from '../../../actions/category.action';
 import { ProductCreateForm } from '../../../components/Forms/ProductCreateForm';
 import { FileUpload } from '../../../components/Forms/FileUpload';
+import { modules, formats } from '../../../reactQuillConstants';
 
 export const ProductCreate = () => {
   const [values, setValues] = useState({
     title: '',
-    description: '',
     price: '',
     category: '',
     categories: [],
@@ -28,6 +29,7 @@ export const ProductCreate = () => {
   });
   const [loading, setLoading] = useState(false);
   const [subOptions, setSubOptions] = useState([]);
+  const [description, setDescription] = useState('');
 
   const authUser = useSelector(state => state.auth);
 
@@ -66,7 +68,10 @@ export const ProductCreate = () => {
     e.preventDefault();
     try {
       setLoading(() => true);
-      const data = await createProduct(authUser.token, values);
+      const data = await createProduct(authUser.token, {
+        ...values,
+        description,
+      });
       setLoading(() => false);
       window.alert(`${data.title} Product created successfully`);
       window.location.reload();
@@ -90,20 +95,33 @@ export const ProductCreate = () => {
               'Create Product'
             )}
           </h1>
-          <div className="col-md-6">
-            <FileUpload
-              values={values}
-              setValues={setValues}
-              setLoading={setLoading}
-            />
-            <ProductCreateForm
-              onSubmitForm={onSubmitHandler}
-              handleChange={onChangeHandler}
-              categoryChange={onChangeOfCategory}
-              values={values}
-              subs={subOptions}
-              setValues={setValues}
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <FileUpload
+                values={values}
+                setValues={setValues}
+                setLoading={setLoading}
+              />
+              <ProductCreateForm
+                onSubmitForm={onSubmitHandler}
+                handleChange={onChangeHandler}
+                categoryChange={onChangeOfCategory}
+                values={values}
+                subs={subOptions}
+                setValues={setValues}
+              />
+            </div>
+            <div className="col-md-4">
+              <ReactQuill
+                theme="snow"
+                value={description}
+                onChange={setDescription}
+                className="ql-editor"
+                modules={modules}
+                formats={formats}
+                placeholder="Enter Description"
+              />
+            </div>
           </div>
         </div>
       </div>

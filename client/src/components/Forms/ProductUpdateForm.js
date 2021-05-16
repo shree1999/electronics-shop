@@ -6,7 +6,6 @@ const { Option } = Select;
 export const ProductUpdateForm = ({
   handleSubmit,
   handleChange,
-  setValues,
   values,
   handleCatagoryChange,
   categories,
@@ -21,10 +20,8 @@ export const ProductUpdateForm = ({
     description,
     price,
     category,
-    subs,
     shipping,
     quantity,
-    images,
     colors,
     brands,
     color,

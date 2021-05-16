@@ -9,7 +9,7 @@ import { handleAddToCart } from '../../actions/cart.action';
 export const HomeProductCard = ({ product }) => {
   const [toolTip, setToolTip] = useState('Add to Cart');
 
-  const { images, slug, title, description } = product;
+  const { images, slug, title } = product;
   const dispatch = useDispatch();
 
   return (
@@ -37,10 +37,7 @@ export const HomeProductCard = ({ product }) => {
       ]}
       style={{ width: '300px' }}
     >
-      <Card.Meta
-        title={title}
-        description={`${description && description.substring(0, 40)}...`}
-      />
+      <Card.Meta title={title} />
     </Card>
   );
 };

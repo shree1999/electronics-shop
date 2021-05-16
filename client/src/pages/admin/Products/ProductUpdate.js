@@ -96,7 +96,7 @@ export const ProductUpdate = ({ match }) => {
   };
 
   const handleChange = e => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setValues(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
     // console.log(e.target.name, " ----- ", e.target.value);
   };
 

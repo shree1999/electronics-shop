@@ -22,12 +22,12 @@ export const ProductCreateForm = ({
         name="title"
         change={handleChange}
       />
-      <ProductInput
+      {/* <ProductInput
         type="text"
         name="description"
         value={values.description}
         change={handleChange}
-      />
+      /> */}
       <ProductInput
         type="number"
         name="price"

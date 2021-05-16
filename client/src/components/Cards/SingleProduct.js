@@ -46,7 +46,7 @@ export const SingleProduct = ({ product, star, onReviewClick }) => {
         )}
         <Tabs type="card">
           <Tabs.TabPane tab="Description" key="1">
-            {description && description}
+            <div dangerouslySetInnerHTML={{ __html: description }}></div>
           </Tabs.TabPane>
           <Tabs.TabPane tab="More" key="2">
             Call use on xxxx xxx xxx to learn more about this product.
