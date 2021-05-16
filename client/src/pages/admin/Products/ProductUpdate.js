@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/navs/AdminNav';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import ReactQuill from 'react-quill';
+import { Spin } from 'antd';
 
 import {
   fetchSingleProduct,
@@ -13,11 +15,10 @@ import {
   getSubsOfCategory,
 } from '../../../actions/category.action';
 import { FileUpload } from '../../../components/Forms/FileUpload';
-import { Spin } from 'antd';
+import { modules, formats } from '../../../reactQuillConstants';
 
 const initialState = {
   title: '',
-  description: '',
   price: '',
   categories: [],
   category: '',
@@ -33,6 +34,7 @@ const initialState = {
 
 export const ProductUpdate = ({ match }) => {
   const [values, setValues] = useState(initialState);
+  const [description, setDescription] = useState('');
   const [categories, setCategories] = useState([]);
   const [subOptions, setSubOptions] = useState([]);
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
@@ -47,7 +49,7 @@ export const ProductUpdate = ({ match }) => {
     try {
       const data = await fetchSingleProduct(slug);
       setValues(prevState => ({ ...prevState, ...data }));
-
+      setDescription(data.description);
       const res = await getSubsOfCategory(data.category._id);
       setSubOptions(res.data);
 
@@ -85,7 +87,11 @@ export const ProductUpdate = ({ match }) => {
       setLoading(true);
       values.subs = arrayOfSubs;
       values.category = selectedCategory;
-      const data = await updateProduct(slug, values, authUser.token);
+      const data = await updateProduct(
+        slug,
+        { ...values, description },
+        authUser.token
+      );
       toast.success('Product Updated');
       console.log(values);
       setLoading(false);
@@ -138,19 +144,31 @@ export const ProductUpdate = ({ match }) => {
             setValues={setValues}
             setLoading={setLoading}
           />
-          <div className="col-md-6">
-            <ProductUpdateForm
-              handleSubmit={handleSubmit}
-              handleChange={handleChange}
-              setValues={setValues}
-              values={values}
-              handleCatagoryChange={handleCatagoryChange}
-              categories={categories}
-              subOptions={subOptions}
-              arrayOfSubs={arrayOfSubs}
-              setArrayOfSubs={setArrayOfSubs}
-              selectedCategory={selectedCategory}
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <ProductUpdateForm
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                setValues={setValues}
+                values={values}
+                handleCatagoryChange={handleCatagoryChange}
+                categories={categories}
+                subOptions={subOptions}
+                arrayOfSubs={arrayOfSubs}
+                setArrayOfSubs={setArrayOfSubs}
+                selectedCategory={selectedCategory}
+              />
+            </div>
+            <div className="col-md-4">
+              <ReactQuill
+                value={description}
+                onChange={setDescription}
+                theme="snow"
+                modules={modules}
+                formats={formats}
+                className="ql-editor"
+              />
+            </div>
           </div>
           <hr />
         </div>

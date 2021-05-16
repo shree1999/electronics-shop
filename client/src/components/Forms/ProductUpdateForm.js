@@ -41,7 +41,7 @@ export const ProductUpdateForm = ({
         />
       </div>
 
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Description</label>
         <input
           type="text"
@@ -50,7 +50,7 @@ export const ProductUpdateForm = ({
           value={description}
           onChange={handleChange}
         />
-      </div>
+      </div> */}
 
       <div className="form-group">
         <label>Price</label>
