@@ -1,11 +1,10 @@
 const admin = require('firebase-admin');
 
-const serviceAccount = require('./googleConfig.json');
-const { keys } = require('./keys');
+const serviceAccount = require('./googleConfig.js');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: keys.DATABASE_URL,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 
 module.exports = admin;

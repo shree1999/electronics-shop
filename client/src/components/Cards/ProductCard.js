@@ -19,6 +19,7 @@ export const HomeProductCard = ({ product }) => {
           src={images && images.length ? images[0].url : ''}
           style={{ height: '150px', objectFit: 'cover' }}
           className="p-1"
+          alt={`${product.title} image`}
         />
       }
       actions={[

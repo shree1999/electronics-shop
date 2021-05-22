@@ -5,7 +5,12 @@ const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('morgan');
 
-dotenv.config();
+if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'production'
+) {
+  dotenv.config({ path: './config/envs/.env' });
+}
 
 const { connectDatabase } = require('./config/db');
 const authRoutes = require('./routes/auth.routes');
@@ -19,10 +24,16 @@ const paymentRoutes = require('./routes/payment');
 const adminRoutes = require('./routes/admin.routes');
 const { errorHander } = require('./middlewares/error');
 
-connectDatabase(mongoose); // database connection
+console.log(process.env.NODE_ENV);
+
+if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'production'
+) {
+  connectDatabase(mongoose);
+}
 
 const app = express();
-const PORT = process.env.PORT || 8000;
 
 // required middlewares
 app.use(cors());
@@ -44,7 +55,4 @@ app.use('/api/admin', adminRoutes);
 
 app.use(errorHander);
 
-module.exports = {
-  app,
-  PORT,
-}; // for testing
+module.exports = app;

@@ -7,7 +7,7 @@ import { DollarOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { createPaymentIntent } from '../../actions/stripe.action';
 import Laptop from '../../images/laptop.png';
-import { createOrder, emptyUserCart } from '../../actions/userAction';
+import { createOrder } from '../../actions/userAction';
 
 const StripeCheckout = () => {
   const dispatch = useDispatch();

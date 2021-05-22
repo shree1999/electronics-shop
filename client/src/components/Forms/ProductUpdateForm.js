@@ -17,7 +17,6 @@ export const ProductUpdateForm = ({
   // destructure
   const {
     title,
-    description,
     price,
     category,
     shipping,
