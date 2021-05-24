@@ -117,7 +117,6 @@ export const reviewProduct = async (star, token, id) => {
 
 export const filterProducts = async args => {
   try {
-    console.log(args);
     const { data } = await axios.post('/api/products/search/filters', args);
 
     return data;

@@ -27,9 +27,7 @@ export const NewArrivals = () => {
     try {
       const data = await getProductCount();
       setProductsCount(data.total);
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   const loadAllProducts = async () => {
