@@ -4,6 +4,8 @@ import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { ShowPaymentInfo } from './Cards/ShowPaymentInfo';
 
 const Orders = ({ orders, handleStatusChange }) => {
+  console.log(orders);
+
   const showOrderInTable = order => (
     <table className="table table-bordered">
       <thead className="thead-light">
@@ -18,25 +20,24 @@ const Orders = ({ orders, handleStatusChange }) => {
       </thead>
 
       <tbody>
-        {order.length > 0 &&
-          order.products.map((p, i) => (
-            <tr key={i}>
-              <td>
-                <b>{p.product.title}</b>
-              </td>
-              <td>{p.product.price}</td>
-              <td>{p.product.brand}</td>
-              <td>{p.color}</td>
-              <td>{p.count}</td>
-              <td>
-                {p.product.shipping === 'Yes' ? (
-                  <CheckCircleOutlined style={{ color: 'green' }} />
-                ) : (
-                  <CloseCircleOutlined style={{ color: 'red' }} />
-                )}
-              </td>
-            </tr>
-          ))}
+        {order.products.map((p, i) => (
+          <tr key={i}>
+            <td>
+              <b>{p.product.title}</b>
+            </td>
+            <td>{p.product.price}</td>
+            <td>{p.product.brand}</td>
+            <td>{p.color}</td>
+            <td>{p.count}</td>
+            <td>
+              {p.product.shipping === 'Yes' ? (
+                <CheckCircleOutlined style={{ color: 'green' }} />
+              ) : (
+                <CloseCircleOutlined style={{ color: 'red' }} />
+              )}
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

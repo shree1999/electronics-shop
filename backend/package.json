@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon -L index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "server": "cross-env NODE_ENV=development nodemon -L index.js",
     "client": "npm start --prefix ../client",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "cloudinary": "^1.25.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

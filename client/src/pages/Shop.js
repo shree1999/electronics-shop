@@ -70,7 +70,7 @@ const Shop = () => {
   useEffect(() => {
     const delay = setTimeout(() => {
       fetchSearchProducts({ query: text });
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(delay);
   }, [text]);

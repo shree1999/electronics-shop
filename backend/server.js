@@ -22,6 +22,7 @@ const userRoutes = require('./routes/user.routes');
 const coupenRoutes = require('./routes/coupen.routes');
 const paymentRoutes = require('./routes/payment');
 const adminRoutes = require('./routes/admin.routes');
+const chatSearchRoutes = require('./routes/chatbot.routes');
 const { errorHander } = require('./middlewares/error');
 
 console.log(process.env.NODE_ENV);
@@ -52,6 +53,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/coupens', coupenRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/search', chatSearchRoutes);
 
 app.use(errorHander);
 
