@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { Spin } from 'antd';
 
 import { getOrders, changeStatus } from '../../actions/admin.actions';
 
@@ -9,6 +10,7 @@ import Orders from '../../components/Orders';
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
   const auth = useSelector(state => state.auth);
 
   const loadOrders = async () => {
@@ -16,9 +18,11 @@ const AdminDashboard = () => {
       const res = await getOrders(auth.token);
       console.log(res.data);
       setOrders(res.data);
+      setLoading(false);
     } catch (err) {
       console.error(err.message);
       toast.error(err.message);
+      setLoading(false);
     }
   };
 
@@ -43,6 +47,8 @@ const AdminDashboard = () => {
           <h1 className="display-3">Admin Dashboard</h1>
           {orders.length > 0 ? (
             <Orders orders={orders} handleStatusChange={handleStatusChange} />
+          ) : loading ? (
+            <Spin />
           ) : (
             <p className="lead">No orders placed</p>
           )}

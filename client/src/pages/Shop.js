@@ -101,7 +101,6 @@ const Shop = () => {
           className="pb-2 pl-4 pr-4"
           value={c._id}
           name="category"
-          value={c._id}
           checked={categoryIds.includes(c._id)}
           onChange={onCheckFilterHandler}
         >
@@ -337,8 +336,6 @@ const Shop = () => {
           ) : (
             <h4 className="text-danger">Products</h4>
           )}
-
-          {products.length < 1 && <p>No products found</p>}
 
           <div className="row pb-5">
             {products.map(p => (
