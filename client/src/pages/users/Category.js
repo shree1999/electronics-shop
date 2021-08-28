@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { HomeProductCard } from '../../components/Cards/ProductCard';
 import { getCategory } from '../../actions/category.action';
 
-export const CategoryPage = ({ match }) => {
+const CategoryPage = ({ match }) => {
   const [cat, setCat] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -52,3 +52,5 @@ export const CategoryPage = ({ match }) => {
     </div>
   );
 };
+
+export default CategoryPage;

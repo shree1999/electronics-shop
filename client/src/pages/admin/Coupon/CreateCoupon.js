@@ -13,7 +13,7 @@ import {
 } from '../../../actions/coupen.action';
 import AdminNav from '../../../components/navs/AdminNav';
 
-export const CreateCouponPage = () => {
+const CreateCouponPage = () => {
   const [name, setName] = useState('');
   const [expiry, setExpiry] = useState('');
   const [discount, setDiscount] = useState('');
@@ -146,3 +146,5 @@ export const CreateCouponPage = () => {
     </div>
   );
 };
+
+export default CreateCouponPage;

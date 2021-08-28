@@ -17,6 +17,7 @@ export const NewArrivals = () => {
 
   useEffect(() => {
     loadAllProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {
@@ -32,9 +33,9 @@ export const NewArrivals = () => {
 
   const loadAllProducts = async () => {
     try {
-      setLoading(prevState => true);
+      setLoading(true);
       const data = await getProductsForHomePage('createdAt', 'desc', page);
-      setLoading(prevState => false);
+      setLoading(false);
       setProducts(data);
     } catch (err) {
       setLoading(false);

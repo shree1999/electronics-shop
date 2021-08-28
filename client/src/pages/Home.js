@@ -4,7 +4,7 @@ import { Jumbotron } from '../components/Cards/Jumbotron';
 import { NewArrivals } from '../components/Home/NewArrivals';
 import { BestSellers } from '../components/Home/BestSeller';
 import { CategoryList } from '../components/navs/Category';
-import { ChatMessaging } from '../components/chat/Chatbot';
+// import { ChatMessaging } from '../components/chat/Chatbot';
 
 const Home = () => {
   return (
@@ -18,7 +18,7 @@ const Home = () => {
         </h1>
       </div>
 
-      <ChatMessaging />
+      {/* {<ChatMessaging />} */}
       <h4 className="text-center display-4 p-3 my-5 jumbotron">New Arrivals</h4>
 
       <NewArrivals />

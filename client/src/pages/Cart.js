@@ -7,7 +7,7 @@ import { userCart } from '../actions/userAction';
 import { Fragment } from 'react';
 import { COD_APPLIED } from '../constants';
 
-export const CartPage = ({ history }) => {
+const CartPage = ({ history }) => {
   const { auth, cart } = useSelector(state => ({ ...state }));
   const dispatch = useDispatch();
 
@@ -127,3 +127,5 @@ export const CartPage = ({ history }) => {
     </div>
   );
 };
+
+export default CartPage;

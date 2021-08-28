@@ -14,7 +14,7 @@ import {
 } from '../actions/userAction';
 import { ADD_CART, COD_APPLIED, COUPON_APPLIED } from '../constants';
 
-export const Checkout = ({ history }) => {
+const Checkout = ({ history }) => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState('');
@@ -29,7 +29,6 @@ export const Checkout = ({ history }) => {
     async function loadData() {
       try {
         const data = await getUserCart(auth.token);
-        console.log(data);
         setProducts(data.products);
         setTotal(data.cartTotal);
       } catch (err) {
@@ -38,7 +37,7 @@ export const Checkout = ({ history }) => {
     }
 
     loadData();
-  }, []);
+  }, [auth.token, history]);
 
   const saveAddressToDb = async () => {
     try {
@@ -80,7 +79,6 @@ export const Checkout = ({ history }) => {
 
   const createCashOrder = () => {
     createCashOrderForUser(auth.token, COD, coupon).then(res => {
-      console.log('USER CASH ORDER CREATED RES ', res);
       // empty cart form redux, local Storage, reset coupon, reset COD, redirect
       if (res.data.ok) {
         // empty local storage
@@ -115,7 +113,12 @@ export const Checkout = ({ history }) => {
       <div className="row">
         <div className="col-md-6">
           <h4 className="display-4 mb-3">Delivery Address</h4>
-          <ReactQuill theme="snow" value={address} onChange={setAddress} />
+          <ReactQuill
+            theme="snow"
+            value={address}
+            onChange={setAddress}
+            placeholder="Enter Adress to proceed to checkout"
+          />
           <button
             className="btn btn-primary mt-2"
             onClick={saveAddressToDb}
@@ -182,7 +185,9 @@ export const Checkout = ({ history }) => {
                   className="btn btn-primary"
                   disabled={!addressSaved || !products.length}
                 >
-                  <Link to="/user/payment">Place Order</Link>
+                  <Link to={addressSaved ? '/user/payment' : '#'}>
+                    Place Order
+                  </Link>
                 </button>
               )}
             </div>
@@ -202,3 +207,5 @@ export const Checkout = ({ history }) => {
     </div>
   );
 };
+
+export default Checkout;

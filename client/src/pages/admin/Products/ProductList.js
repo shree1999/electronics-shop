@@ -6,7 +6,7 @@ import AdminNav from '../../../components/navs/AdminNav';
 import { fetchProductsByLimit } from '../../../actions/product.action';
 import { ProductCard } from '../../../components/Cards/AdminProductCard';
 
-export const ProductList = () => {
+const ProductList = () => {
   const dispatch = useDispatch();
   const product = useSelector(state => state.product);
 
@@ -39,3 +39,5 @@ export const ProductList = () => {
     </div>
   );
 };
+
+export default ProductList;

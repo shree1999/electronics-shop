@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { fetchSingleProduct, reviewProduct } from '../actions/product.action';
 import { SingleProduct } from '../components/Cards/SingleProduct';
 
-export const ProductPage = ({ match }) => {
+const ProductPage = ({ match }) => {
   const [product, setProduct] = useState({});
   const [star, setStar] = useState(0);
 
@@ -13,6 +13,7 @@ export const ProductPage = ({ match }) => {
 
   useEffect(() => {
     loadProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.slug]);
 
   useEffect(() => {
@@ -23,7 +24,8 @@ export const ProductPage = ({ match }) => {
 
       existingRating && setStar(existingRating.star);
     }
-  });
+  }, [product.ratings, authUser.token, authUser._id]);
+
   const loadProduct = async () => {
     try {
       const data = await fetchSingleProduct(match.params.slug);
@@ -56,3 +58,5 @@ export const ProductPage = ({ match }) => {
     </div>
   );
 };
+
+export default ProductPage;

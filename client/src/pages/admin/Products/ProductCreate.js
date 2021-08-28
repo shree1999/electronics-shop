@@ -14,7 +14,7 @@ import { ProductCreateForm } from '../../../components/Forms/ProductCreateForm';
 import { FileUpload } from '../../../components/Forms/FileUpload';
 import { modules, formats } from '../../../reactQuillConstants';
 
-export const ProductCreate = () => {
+const ProductCreate = () => {
   const [values, setValues] = useState({
     title: '',
     price: '',
@@ -128,3 +128,5 @@ export const ProductCreate = () => {
     </div>
   );
 };
+
+export default ProductCreate;

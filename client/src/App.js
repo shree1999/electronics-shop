@@ -1,42 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
-
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import ForgotPassword from './pages/auth/ForgotPassword';
-import RegisterComplete from './pages/auth/RegisterComplete';
-
-import Home from './pages/Home';
-import Shop from './pages/Shop';
-import { CartPage } from './pages/Cart';
-import { Checkout } from './pages/Checkout';
-import Payment from './pages/Payment';
-
-import History from './pages/users/History';
-import Wishlist from './pages/users/Wishlist';
-import Password from './pages/users/Password';
-import { ProductPage } from './pages/Product';
-import { CategoryPage } from './pages/users/Category';
-
-import AdminDashboard from './pages/admin/AdminDashboard';
-import CreateCategory from './pages/admin/Category/CreateCategory';
-import UpdateCategory from './pages/admin/Category/UpdateCategory';
-import SubCreate from './pages/admin/Sub-Categories/SubCreate';
-import SubUpdate from './pages/admin/Sub-Categories/SubUpdate';
-import { ProductCreate } from './pages/admin/Products/ProductCreate';
-import { ProductList } from './pages/admin/Products/ProductList';
-import { ProductUpdate } from './pages/admin/Products/ProductUpdate';
-import { CreateCouponPage } from './pages/admin/Coupon/CreateCoupon';
-
-import Header from './components/Header';
-import PrivateUserRoute from './components/routes/PrivateUserRoutes';
-import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
+import { Spin } from 'antd';
 
 import { auth } from './firebase';
 import { getCurrentUser } from './actions/userAction';
+
+const Login = lazy(() => import('./pages/auth/Login'));
+const Register = lazy(() => import('./pages/auth/Register'));
+const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
+const RegisterComplete = lazy(() => import('./pages/auth/RegisterComplete'));
+
+const Home = lazy(() => import('./pages/Home'));
+const Shop = lazy(() => import('./pages/Shop'));
+const CartPage = lazy(() => import('./pages/Cart'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const Payment = lazy(() => import('./pages/Payment'));
+
+const History = lazy(() => import('./pages/users/History'));
+const Wishlist = lazy(() => import('./pages/users/Wishlist'));
+const Password = lazy(() => import('./pages/users/Password'));
+const ProductPage = lazy(() => import('./pages/Product'));
+const CategoryPage = lazy(() => import('./pages/users/Category'));
+
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const CreateCategory = lazy(() =>
+  import('./pages/admin/Category/CreateCategory')
+);
+const UpdateCategory = lazy(() =>
+  import('./pages/admin/Category/UpdateCategory')
+);
+const SubCreate = lazy(() => import('./pages/admin/Sub-Categories/SubCreate'));
+const SubUpdate = lazy(() => import('./pages/admin/Sub-Categories/SubUpdate'));
+const ProductCreate = lazy(() =>
+  import('./pages/admin/Products/ProductCreate')
+);
+const ProductList = lazy(() => import('./pages/admin/Products/ProductList'));
+const ProductUpdate = lazy(() =>
+  import('./pages/admin/Products/ProductUpdate')
+);
+const CreateCouponPage = lazy(() =>
+  import('./pages/admin/Coupon/CreateCoupon')
+);
+
+const Header = lazy(() => import('./components/Header'));
+const PrivateUserRoute = lazy(() =>
+  import('./components/routes/PrivateUserRoutes')
+);
+const PrivateAdminRoute = lazy(() =>
+  import('./components/routes/PrivateAdminRoute')
+);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -53,10 +68,16 @@ const App = () => {
 
     // cleanup for any memory leak
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return (
-    <React.Fragment>
+    <Suspense
+      fallback={
+        <div className="col text-center p-5">
+          <Spin size="large" />
+        </div>
+      }
+    >
       <Header />
       <ToastContainer />
       <Switch>
@@ -98,7 +119,7 @@ const App = () => {
         />
         <PrivateAdminRoute path="/admin/coupons" component={CreateCouponPage} />
       </Switch>
-    </React.Fragment>
+    </Suspense>
   );
 };
 

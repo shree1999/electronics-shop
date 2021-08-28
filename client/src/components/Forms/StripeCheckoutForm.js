@@ -28,13 +28,12 @@ const StripeCheckout = () => {
 
   useEffect(() => {
     createPaymentIntent(auth.token, coupon.couponApplied).then(res => {
-      console.log('create payment intent', res.data);
       setCartTotal(res.data.cartTotal);
       setTotalAfterDiscount(res.data.totalAfterDiscount);
       setPayable(res.data.payable);
       setClientSecret(res.data.clientSecret);
     });
-  }, []);
+  }, [auth.token, coupon.couponApplied]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -108,6 +107,7 @@ const StripeCheckout = () => {
                 objectFit: 'cover',
                 marginBottom: '-50px',
               }}
+              alt="product placeholder"
             />
           }
           actions={[

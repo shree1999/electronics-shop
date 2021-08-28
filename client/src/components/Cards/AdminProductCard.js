@@ -31,7 +31,7 @@ export const ProductCard = ({ product }) => {
         <img
           src={product.images.length > 0 ? product.images[0].url : ''}
           style={{ height: '150px', objectFit: 'cover' }}
-          alt={`${product.title} product image`}
+          alt={`${product.title} product`}
         />
       }
       actions={[

@@ -39,10 +39,16 @@ export const SingleProduct = ({ product, star, onReviewClick }) => {
         {images && images.length ? (
           <Carousel showArrows={true} autoPlay infiniteLoop>
             {images &&
-              images.map(i => <img src={i.url} key={i.public_image_id} />)}
+              images.map(i => (
+                <img src={i.url} key={i.public_image_id} alt="product" />
+              ))}
           </Carousel>
         ) : (
-          <Card cover={<img src={Laptop} className="mb-3 card-image" />}></Card>
+          <Card
+            cover={
+              <img src={Laptop} className="mb-3 card-image" alt="product" />
+            }
+          ></Card>
         )}
         <Tabs type="card">
           <Tabs.TabPane tab="Description" key="1">
@@ -68,12 +74,13 @@ export const SingleProduct = ({ product, star, onReviewClick }) => {
               <a
                 onClick={() => dispatch(handleAddToCart(product, setToolTip))}
                 disabled={product.quantity < 1}
+                href
               >
                 <ShoppingCartOutlined className="text-success" /> <br />
                 {product.quantity < 1 ? 'Out of stock' : 'Add to Cart'}
               </a>
             </Tooltip>,
-            <a onClick={handleAddToWishlist}>
+            <a onClick={handleAddToWishlist} href>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </a>,
             <RatingModal>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Loading = () => {
   const [count, setCount] = useState(5);
@@ -12,12 +12,12 @@ const Loading = () => {
 
     // redirect when count is 0
     if (count === 0) {
-      history.push("/");
+      history.push('/');
     }
 
     // cleanup for memory leak
     return () => clearInterval(interval);
-  }, [count]);
+  }, [count, history]);
 
   return (
     <div className="container p-5 text-center">

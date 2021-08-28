@@ -32,7 +32,7 @@ const initialState = {
   brand: '',
 };
 
-export const ProductUpdate = ({ match }) => {
+const ProductUpdate = ({ match }) => {
   const [values, setValues] = useState(initialState);
   const [description, setDescription] = useState('');
   const [categories, setCategories] = useState([]);
@@ -87,11 +87,7 @@ export const ProductUpdate = ({ match }) => {
       setLoading(true);
       values.subs = arrayOfSubs;
       values.category = selectedCategory;
-      const data = await updateProduct(
-        slug,
-        { ...values, description },
-        authUser.token
-      );
+      await updateProduct(slug, { ...values, description }, authUser.token);
       toast.success('Product Updated');
       console.log(values);
       setLoading(false);
@@ -176,3 +172,5 @@ export const ProductUpdate = ({ match }) => {
     </div>
   );
 };
+
+export default ProductUpdate;

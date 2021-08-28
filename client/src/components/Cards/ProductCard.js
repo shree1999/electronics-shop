@@ -19,7 +19,7 @@ export const HomeProductCard = ({ product }) => {
           src={images && images.length ? images[0].url : ''}
           style={{ height: '150px', objectFit: 'cover' }}
           className="p-1"
-          alt={`${product.title} image`}
+          alt={`${product.title}`}
         />
       }
       actions={[
@@ -30,6 +30,7 @@ export const HomeProductCard = ({ product }) => {
           <a
             onClick={() => dispatch(handleAddToCart(product, setToolTip))}
             disabled={product.quantity < 1}
+            href
           >
             <ShoppingCartOutlined className="text-danger" /> <br />{' '}
             {product.quantity < 1 ? 'Out of stock' : 'Add to Cart'}
