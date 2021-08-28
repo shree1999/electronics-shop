@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('morgan');
 const path = require('path');
+const mongoSantize = require('express-mongo-sanitize');
 
 const { connectDatabase } = require('./config/db');
 const authRoutes = require('./routes/auth.routes');
@@ -34,6 +35,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(logger('dev'));
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(mongoSantize());
 
 // routes
 app.use('/api/auth', authRoutes);
