@@ -4,7 +4,7 @@ const {
   createCoupon,
   listCoupon,
   removeCoupon,
-} = require('../controllers/Coupen.controller');
+} = require('../controllers/coupen.controller');
 const { authCheck, adminCheck } = require('../middlewares/auth.middleware');
 
 const router = express.Router();
