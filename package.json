@@ -4,14 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
-    "server": "cross-env NODE_ENV=development nodemon -L index.js",
-    "client": "npm start --prefix ../client",
+    "start": "cross-env NODE_ENV=production node backend/index.js",
+    "server": "cross-env NODE_ENV=production nodemon backend/index.js",
+    "client": "npm start --prefix client",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
-    "build": "cd ../client && npm run build",
-    "install-client": "cd ../client && yarn",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ../client && npm run build --prefix ../client"
+    "build": "cd client && npm run build",
+    "install-client": "cd client && yarn",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +24,7 @@
     "express-jwt": "^6.0.0",
     "firebase-admin": "^9.4.1",
     "helmet": "^4.2.0",
+    "helmet-csp": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.0",
     "morgan": "^1.10.0",
@@ -35,7 +35,6 @@
   "devDependencies": {
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.3",
-    "jest": "^26.6.3",
     "nodemon": "^2.0.6"
   }
 }

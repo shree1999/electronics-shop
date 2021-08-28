@@ -1,14 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+require('dotenv').config();
 const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('morgan');
 const path = require('path');
-
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({ path: './config/envs/.env' });
-}
 
 const { connectDatabase } = require('./config/db');
 const authRoutes = require('./routes/auth.routes');
@@ -34,7 +30,7 @@ const app = express();
 
 // required middlewares
 app.use(cors());
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(logger('dev'));
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -54,11 +50,11 @@ app.use('/api/search', chatSearchRoutes);
 app.use(errorHander);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/client/build')));
+  app.use(express.static(path.join(__dirname, '../client/build')));
 
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  );
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
+  });
 } else {
   app.get('/', (req, res) => {
     res.send('API is running....');
