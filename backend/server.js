@@ -6,10 +6,7 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const path = require('path');
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.NODE_ENV === 'production'
-) {
+if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: './config/envs/.env' });
 }
 
@@ -25,8 +22,6 @@ const paymentRoutes = require('./routes/payment');
 const adminRoutes = require('./routes/admin.routes');
 const chatSearchRoutes = require('./routes/chatbot.routes');
 const { errorHander } = require('./middlewares/error');
-
-console.log(process.env.NODE_ENV);
 
 if (
   process.env.NODE_ENV === 'development' ||
